@@ -280,28 +280,40 @@ export function setupAuth(app: Express) {
   });
   
   // Forgot Password Endpoint - Resets to default password for educational system
+  // Now requires a secret key that only the admin knows for additional security
   app.post("/api/forgot-password", async (req, res, next) => {
     try {
-      const { name, admissionNumber } = req.body;
+      const { name, admissionNumber, secretKey } = req.body;
       
-      if (!name || !admissionNumber) {
+      if (!name || !admissionNumber || !secretKey) {
         return res.status(400).json({ 
           success: false,
-          message: "Name and admission number are required" 
+          message: "Name, admission number, and secret key are required" 
         });
       }
       
-      console.log(`Password reset attempt for ${name}, ${admissionNumber}`);
+      // Check the secret key - this is a fixed value known only to the admin
+      const ADMIN_SECRET_KEY = "passpass!";
+      
+      if (secretKey !== ADMIN_SECRET_KEY) {
+        console.log(`Password reset REJECTED - Invalid secret key used for ${name}, ${admissionNumber}`);
+        return res.status(403).json({
+          success: false,
+          message: "Invalid secret key. Please contact the administrator for the correct key."
+        });
+      }
+      
+      console.log(`Password reset attempt for ${name}, ${admissionNumber} with valid secret key`);
       
       // Find the user
       const user = await storage.getUserByCredentials(name, admissionNumber);
       
       if (!user) {
         console.log(`User not found for password reset: ${name}, ${admissionNumber}`);
-        // For security, still return success even if user not found
-        return res.status(200).json({
-          success: true,
-          message: "If your account exists, the password has been reset to the default."
+        // For security, still return a generic message
+        return res.status(400).json({
+          success: false,
+          message: "Could not find an account with that name and admission number."
         });
       }
       

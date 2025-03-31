@@ -23,6 +23,7 @@ const loginSchema = z.object({
 const forgotPasswordSchema = z.object({
   name: z.string().min(1, "Name is required"),
   admissionNumber: z.string().min(1, "Admission number is required"),
+  secretKey: z.string().min(1, "Secret key provided by administrator is required"),
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
@@ -50,6 +51,7 @@ export default function AuthPage() {
     defaultValues: {
       name: "",
       admissionNumber: "",
+      secretKey: "",
     },
   });
 
@@ -243,7 +245,7 @@ export default function AuthPage() {
                     <div className="bg-blue-50 rounded-lg p-3 border border-blue-100 mb-4">
                       <p className="text-sm text-blue-700 flex items-start">
                         <Key className="h-4 w-4 mr-2 mt-0.5 flex-shrink-0" />
-                        Enter your name and admission number to reset your password to the default.
+                        To reset your password, enter your details and the administrator provided secret key.
                       </p>
                     </div>
                     
@@ -269,6 +271,26 @@ export default function AuthPage() {
                           <FormControl>
                             <Input placeholder="ADM123456" {...field} />
                           </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={forgotPasswordForm.control}
+                      name="secretKey"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Administrator Secret Key</FormLabel>
+                          <FormControl>
+                            <Input 
+                              type="password" 
+                              placeholder="Enter the secret key provided by admin" 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Contact the administrator for this secret key
+                          </p>
                           <FormMessage />
                         </FormItem>
                       )}
