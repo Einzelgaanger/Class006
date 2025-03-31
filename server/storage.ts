@@ -130,20 +130,44 @@ export class DatabaseStorage implements IStorage {
   
   // Dashboard methods
   async getDashboardStats(userId: number): Promise<any> {
-    // Count assignments
-    const [assignmentsResult] = await db
-      .select({ count: sql<number>`count(*)` })
-      .from(assignments);
-    
-    // Count notes
+    // Count unread notes
     const [notesResult] = await db
       .select({ count: sql<number>`count(*)` })
-      .from(notes);
+      .from(notes)
+      .leftJoin(
+        userNoteViews,
+        and(
+          eq(notes.id, userNoteViews.noteId),
+          eq(userNoteViews.userId, userId)
+        )
+      )
+      .where(isNull(userNoteViews.id));
     
-    // Count past papers
+    // Count pending assignments
+    const [assignmentsResult] = await db
+      .select({ count: sql<number>`count(*)` })
+      .from(assignments)
+      .leftJoin(
+        completedAssignments,
+        and(
+          eq(assignments.id, completedAssignments.assignmentId),
+          eq(completedAssignments.userId, userId)
+        )
+      )
+      .where(isNull(completedAssignments.id));
+    
+    // Count unread past papers
     const [pastPapersResult] = await db
       .select({ count: sql<number>`count(*)` })
-      .from(pastPapers);
+      .from(pastPapers)
+      .leftJoin(
+        userPaperViews,
+        and(
+          eq(pastPapers.id, userPaperViews.paperId),
+          eq(userPaperViews.userId, userId)
+        )
+      )
+      .where(isNull(userPaperViews.id));
     
     // Count overdue assignments
     const [overdueResult] = await db
