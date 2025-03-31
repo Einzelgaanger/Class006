@@ -1,6 +1,8 @@
 import { useAuth } from "@/hooks/use-auth";
-import { Loader2 } from "lucide-react";
 import { Redirect, Route } from "wouter";
+import LoadingPage from "@/components/loading-page";
+import SplashScreen from "@/components/splash-screen";
+import { useState, useEffect } from "react";
 
 export function ProtectedRoute({
   path,
@@ -10,13 +12,25 @@ export function ProtectedRoute({
   component: () => React.JSX.Element;
 }) {
   const { user, isLoading } = useAuth();
+  const [showSplash, setShowSplash] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(true);
+
+  // Show splash screen only on initial login
+  useEffect(() => {
+    if (!isLoading && user && initialLoad) {
+      setShowSplash(true);
+      setInitialLoad(false);
+    }
+  }, [isLoading, user, initialLoad]);
+
+  const handleSplashComplete = () => {
+    setShowSplash(false);
+  };
 
   if (isLoading) {
     return (
       <Route path={path}>
-        <div className="flex items-center justify-center min-h-screen">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        </div>
+        <LoadingPage />
       </Route>
     );
   }
@@ -29,5 +43,10 @@ export function ProtectedRoute({
     );
   }
 
-  return <Route path={path} component={Component} />;
+  return (
+    <Route path={path}>
+      {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
+      <Component />
+    </Route>
+  );
 }

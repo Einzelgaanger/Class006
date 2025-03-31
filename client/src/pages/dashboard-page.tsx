@@ -99,10 +99,15 @@ export default function DashboardPage() {
               value={stats?.notesCount ?? 0}
               icon={<FileText className="h-6 w-6 text-green-500" />}
               color="green"
-              badges={[
+              badges={(stats?.notesCount ?? 0) > 0 ? [
                 {
-                  text: "4 new",
+                  text: `${stats?.notesCount ?? 0} unread`,
                   color: "blue"
+                }
+              ] : [
+                {
+                  text: "No new notes",
+                  color: "gray"
                 }
               ]}
             />
@@ -112,7 +117,12 @@ export default function DashboardPage() {
               value={stats?.pastPapersCount ?? 0}
               icon={<FileText className="h-6 w-6 text-purple-500" />}
               color="purple"
-              badges={[
+              badges={(stats?.pastPapersCount ?? 0) > 0 ? [
+                {
+                  text: `${stats?.pastPapersCount ?? 0} unread`,
+                  color: "blue"
+                }
+              ] : [
                 {
                   text: "All viewed",
                   color: "gray"

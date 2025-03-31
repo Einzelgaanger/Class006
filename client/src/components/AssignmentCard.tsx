@@ -303,6 +303,20 @@ export default function AssignmentCard({ assignment, unitCode }: AssignmentCardP
                   <p>{elapsedSinceCreation} after posting</p>
                 </div>
               )}
+              
+              {assignment.completed && (
+                <div className="col-span-2 mt-2">
+                  <div className="bg-green-50 border border-green-100 rounded-md p-3 flex items-start">
+                    <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="text-green-800 font-medium">Assignment completed successfully</p>
+                      <p className="text-sm text-green-600">
+                        You completed this assignment {formatDistanceToNow(new Date(assignment.completedAt!), { addSuffix: true })}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
             
             <div className="flex justify-between pt-4">
