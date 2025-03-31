@@ -5,11 +5,13 @@ import session from "express-session";
 import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
 import { storage } from "./storage";
-import { User as UserType } from "@shared/schema";
+import { User as UserType, users } from "@shared/schema";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 declare global {
   namespace Express {
@@ -110,24 +112,46 @@ export function setupAuth(app: Express) {
       },
       async (req, admissionNumber, password, done) => {
         try {
-          const user = await storage.getUserByCredentials(req.body.name, admissionNumber);
+          // Log login attempt to debug
+          console.log(`Login attempt: Name: ${req.body.name}, Admission: ${admissionNumber}`);
           
-          if (!user || !(await comparePasswords(password, user.password))) {
-            return done(null, false);
-          } else {
-            // Format user to match Express.User interface
-            const userSession = {
-              id: user.id,
-              name: user.name,
-              admissionNumber: user.admissionNumber,
-              password: user.password,
-              profileImageUrl: user.profileImageUrl || null,
-              rank: user.rank || null,
-              role: user.role || null
-            };
-            return done(null, userSession);
+          // First try with exact credentials
+          let user = await storage.getUserByCredentials(req.body.name, admissionNumber);
+          
+          // If user not found, try with admission number only (more lenient)
+          if (!user) {
+            // This is a fallback to handle case sensitivity or spacing differences
+            const [userByAdmission] = await db.select().from(users).where(eq(users.admissionNumber, admissionNumber));
+            user = userByAdmission;
           }
+          
+          if (!user) {
+            console.log(`User not found with admission number: ${admissionNumber}`);
+            return done(null, false);
+          }
+          
+          // Check password
+          const isPasswordValid = await comparePasswords(password, user.password);
+          if (!isPasswordValid) {
+            console.log(`Invalid password for user: ${user.name}`);
+            return done(null, false);
+          }
+          
+          // Format user to match Express.User interface
+          const userSession = {
+            id: user.id,
+            name: user.name,
+            admissionNumber: user.admissionNumber,
+            password: user.password,
+            profileImageUrl: user.profileImageUrl || null,
+            rank: user.rank || null,
+            role: user.role || null
+          };
+          
+          console.log(`Login successful for: ${user.name}`);
+          return done(null, userSession);
         } catch (err) {
+          console.error('Authentication error:', err);
           return done(err);
         }
       }

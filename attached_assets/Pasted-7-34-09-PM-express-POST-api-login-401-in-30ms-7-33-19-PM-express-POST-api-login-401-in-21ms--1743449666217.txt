@@ -1,0 +1,107 @@
+7:34:09 PM [express] POST /api/login 401 in 30ms
+7:33:19 PM [express] POST /api/login 401 in 21ms
+7:31:26 PM [express] POST /api/login 401 in 20ms
+7:31:04 PM [express] POST /api/login 401 in 17ms
+==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
+==> Detected service running on port 5000
+7:29:14 PM [express] POST /api/login 401 in 8ms
+7:29:04 PM [express] POST /api/login 401 in 21ms
+7:28:52 PM [express] POST /api/login 401 in 18ms
+7:28:35 PM [express] POST /api/login 401 in 18ms
+7:28:22 PM [express] POST /api/logout 200 in 40ms
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+7:28:05 PM [express] GET /api/dashboard/deadlines 200 in 11ms :: []
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+7:28:05 PM [express] GET /api/dashboard/activities 200 in 163ms :: []
+7:28:05 PM [express] GET /api/dashboard/stats 200 in 71ms :: {"assignmentsCount":"0","notesCount":"0…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+7:28:05 PM [express] GET /api/units 200 in 21ms :: [{"id":1,"unitCode":"MAT 2101","name":"Integral C…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+7:28:04 PM [express] POST /api/login 200 in 351ms :: {"id":1,"name":"Samsam Abdul Nassir","admission…
+7:27:42 PM [express] POST /api/login 401 in 9ms
+7:27:36 PM [express] POST /api/login 401 in 23ms
+7:27:09 PM [express] POST /api/logout 200 in 29ms
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+7:26:55 PM [express] GET /api/units 200 in 200ms :: [{"id":1,"unitCode":"MAT 2101","name":"Integral …
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+7:26:55 PM [express] GET /api/dashboard/activities 200 in 334ms :: []
+7:26:54 PM [express] GET /api/dashboard/stats 200 in 258ms :: {"assignmentsCount":"0","notesCount":"…
+7:26:54 PM [express] GET /api/dashboard/deadlines 200 in 255ms :: []
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+7:26:54 PM [express] POST /api/login 200 in 338ms :: {"id":1,"name":"Samsam Abdul Nassir","admission…
+7:26:20 PM [express] GET /api/user 401 in 2ms
+7:26:13 PM [express] POST /api/login 401 in 4ms
+7:26:03 PM [express] POST /api/login 401 in 4ms
+7:25:53 PM [express] POST /api/login 401 in 67ms
+==> Your service is live 🎉
+7:25:45 PM [express] serving on port 5000
+7:25:45 PM [db-init] Database initialization complete
+7:25:44 PM [db-init] Created table: session
+7:25:44 PM [db-init] Created table: user_paper_views
+7:25:44 PM [db-init] Created table: user_note_views
+7:25:44 PM [db-init] Created table: completed_assignments
+7:25:44 PM [db-init] Created table: past_papers
+7:25:44 PM [db-init] Created table: assignments
+7:25:44 PM [db-init] Created table: notes
+7:25:44 PM [db-init] Created table: units
+7:25:44 PM [db-init] Created table: users
+7:25:44 PM [db-init] Creating database tables...
+7:25:43 PM [db-init] Initializing database...
+==> Running 'NODE_ENV=production node dist/index.js'
+==> Deploying...
+==> Build successful 🎉
+==> Uploaded in 8.0s. Compression took 2.8s
+==> Uploading build...
+⚡ Done in 6ms
+  dist/index.js  49.3kb
+✓ built in 3.57s
+../dist/public/assets/index-C1yyk3Ob.js   435.18 kB │ gzip: 129.19 kB
+../dist/public/assets/index-W62OFf9Q.css   65.33 kB │ gzip:  11.36 kB
+../dist/public/index.html                   2.21 kB │ gzip:   0.86 kB
+computing gzip size...
+rendering chunks...
+✓ 2032 modules transformed.
+transforming...
+vite v5.4.14 building for production...
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+> rest-express@1.0.0 build
+Run `npm audit` for details.
+  npm audit fix --force
+To address all issues (including breaking changes), run:
+  npm audit fix
+To address issues that do not require attention, run:
+8 moderate severity vulnerabilities
+  run `npm fund` for details
+63 packages are looking for funding
+added 83 packages, and audited 496 packages in 3s
+==> Running build command 'npm install --include=dev && npm run build'...
+==> Docs on specifying a bun version: https://render.com/docs/bun-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Node.js version 22.12.0 (default)
+==> Transferred 211MB in 8s. Extraction took 3s.
+==> Downloading cache...
+==> Checking out commit 2d05d3ba7fb7f3cb80114f59408e7d3ec7f2863d in branch main
+==> Cloning from https://github.com/Einzelgaanger/SDS-Y2-S1-GB
+==> It looks like we don't have access to your repo, but we'll try to clone it anyway.
