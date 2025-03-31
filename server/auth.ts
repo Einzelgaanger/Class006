@@ -278,6 +278,48 @@ export function setupAuth(app: Express) {
       next(err);
     }
   });
+  
+  // Forgot Password Endpoint - Resets to default password for educational system
+  app.post("/api/forgot-password", async (req, res, next) => {
+    try {
+      const { name, admissionNumber } = req.body;
+      
+      if (!name || !admissionNumber) {
+        return res.status(400).json({ 
+          success: false,
+          message: "Name and admission number are required" 
+        });
+      }
+      
+      console.log(`Password reset attempt for ${name}, ${admissionNumber}`);
+      
+      // Find the user
+      const user = await storage.getUserByCredentials(name, admissionNumber);
+      
+      if (!user) {
+        console.log(`User not found for password reset: ${name}, ${admissionNumber}`);
+        // For security, still return success even if user not found
+        return res.status(200).json({
+          success: true,
+          message: "If your account exists, the password has been reset to the default."
+        });
+      }
+      
+      // Reset password to default
+      const hashedPassword = await hashPassword("sds#website");
+      await storage.updateUserPassword(user.id, hashedPassword);
+      
+      console.log(`Password reset successful for ${user.name}`);
+      
+      res.status(200).json({
+        success: true,
+        message: "Your password has been reset to the default password: sds#website"
+      });
+    } catch (err) {
+      console.error('Password reset error:', err);
+      next(err);
+    }
+  });
 
   // Update profile image
   app.patch("/api/user/profile-image", profileUpload.single('profileImage'), async (req, res, next) => {
