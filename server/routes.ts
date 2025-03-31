@@ -1,4 +1,5 @@
 import type { Express } from "express";
+import express from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, fileUpload } from "./auth";
@@ -10,10 +11,21 @@ import {
 } from "@shared/schema";
 import fs from "fs";
 import path from "path";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Set up auth routes and middleware
   setupAuth(app);
+
+  // Serve static files from the client/public directory
+  app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
+  
+  // Serve uploads directory for file access
+  app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
   // Create upload directory if it doesn't exist
   const uploadDir = path.join(process.cwd(), 'uploads');
