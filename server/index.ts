@@ -3,6 +3,20 @@ import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { initializeDatabase } from "./init-db";
 
+// Set default environment variables if not set
+if (!process.env.NODE_ENV) {
+  process.env.NODE_ENV = 'development';
+}
+
+if (!process.env.SESSION_SECRET) {
+  process.env.SESSION_SECRET = 'sds-year2-group-b-very-secret-key';
+  console.log('WARNING: Using default session secret. Set SESSION_SECRET environment variable in production.');
+}
+
+// Print environment information for debugging
+console.log(`Starting server in ${process.env.NODE_ENV} mode`);
+console.log(`Using database: ${process.env.DATABASE_URL ? 'External database (via DATABASE_URL)' : 'Default database'}`);
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

@@ -1,0 +1,47 @@
+7:49:24 PM [express] POST /api/login 401 in 8ms
+7:49:19 PM [express] POST /api/login 401 in 47ms
+7:49:05 PM [express] POST /api/login 401 in 33ms
+7:48:50 PM [express] POST /api/login 401 in 22ms
+7:48:35 PM [express] GET /api/user 401 in 10ms
+7:48:28 PM [express] POST /api/login 401 in 192ms
+==> Your service is live 🎉
+7:48:11 PM [express] serving on port 5000
+7:48:10 PM [db-init] Database tables already exist
+7:48:10 PM [db-init] Initializing database...
+==> Running 'NODE_ENV=production node dist/index.js'
+==> Deploying...
+==> Build successful 🎉
+==> Uploaded in 6.3s. Compression took 3.1s
+==> Uploading build...
+⚡ Done in 6ms
+  dist/index.js  49.3kb
+✓ built in 3.62s
+../dist/public/assets/index-C1yyk3Ob.js   435.18 kB │ gzip: 129.19 kB
+../dist/public/assets/index-W62OFf9Q.css   65.33 kB │ gzip:  11.36 kB
+../dist/public/index.html                   2.21 kB │ gzip:   0.86 kB
+computing gzip size...
+rendering chunks...
+✓ 2032 modules transformed.
+transforming...
+vite v5.4.14 building for production...
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+> rest-express@1.0.0 build
+Run `npm audit` for details.
+  npm audit fix --force
+To address all issues (including breaking changes), run:
+  npm audit fix
+To address issues that do not require attention, run:
+8 moderate severity vulnerabilities
+  run `npm fund` for details
+63 packages are looking for funding
+up to date, audited 496 packages in 3s
+==> Running build command 'npm install --include=dev && npm run build'...
+==> Docs on specifying a bun version: https://render.com/docs/bun-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Node.js version 22.12.0 (default)
+==> Transferred 242MB in 8s. Extraction took 5s.
+==> Downloading cache...
+==> Checking out commit 65e1dcd1f9d6d4d9b87d417c228fe64001844dcd in branch main
+==> Cloning from https://github.com/Einzelgaanger/SDS-Y2-S1-GB
+==> It looks like we don't have access to your repo, but we'll try to clone it anyway.
