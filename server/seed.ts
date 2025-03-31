@@ -45,6 +45,13 @@ async function seed() {
         password: defaultPassword,
         profileImageUrl: null,
         rank: 3
+      },
+      {
+        name: "Alfred Mulinge",
+        admissionNumber: "180963",
+        password: defaultPassword,
+        profileImageUrl: null,
+        rank: 4
       }
     ]);
     console.log("Users seeded successfully!");
