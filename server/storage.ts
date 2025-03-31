@@ -292,49 +292,44 @@ export class DatabaseStorage implements IStorage {
     // For each unit, calculate notification count
     const unitsWithNotifications = await Promise.all(
       allUnits.map(async (unit) => {
-        // Calculate unread notes
-        const [unreadNotes] = await db
-          .select({ count: sql<number>`count(*)` })
-          .from(notes)
-          .where(eq(notes.unitCode, unit.unitCode))
-          .leftJoin(
-            userNoteViews,
-            and(
-              eq(notes.id, userNoteViews.noteId),
-              eq(userNoteViews.userId, userId)
-            )
-          )
-          .where(isNull(userNoteViews.id));
+        // Calculate unread notes count
+        const notesQuery = await db.execute(sql`
+          SELECT COUNT(*) as count 
+          FROM ${notes} 
+          LEFT JOIN ${userNoteViews} ON ${notes.id} = ${userNoteViews.noteId}
+          AND ${userNoteViews.userId} = ${userId}
+          WHERE ${notes.unitCode} = ${unit.unitCode}
+          AND ${userNoteViews.id} IS NULL
+        `);
+        const [unreadNotes] = notesQuery;
         
-        // Calculate uncompleted assignments
-        const [pendingAssignments] = await db
-          .select({ count: sql<number>`count(*)` })
-          .from(assignments)
-          .where(eq(assignments.unitCode, unit.unitCode))
-          .leftJoin(
-            completedAssignments,
-            and(
-              eq(assignments.id, completedAssignments.assignmentId),
-              eq(completedAssignments.userId, userId)
-            )
-          )
-          .where(isNull(completedAssignments.id));
+        // Calculate uncompleted assignments count
+        const assignmentsQuery = await db.execute(sql`
+          SELECT COUNT(*) as count 
+          FROM ${assignments} 
+          LEFT JOIN ${completedAssignments} ON ${assignments.id} = ${completedAssignments.assignmentId}
+          AND ${completedAssignments.userId} = ${userId}
+          WHERE ${assignments.unitCode} = ${unit.unitCode}
+          AND ${completedAssignments.id} IS NULL
+        `);
+        const [pendingAssignments] = assignmentsQuery;
         
-        // Calculate unread past papers
-        const [unreadPapers] = await db
-          .select({ count: sql<number>`count(*)` })
-          .from(pastPapers)
-          .where(eq(pastPapers.unitCode, unit.unitCode))
-          .leftJoin(
-            userPaperViews,
-            and(
-              eq(pastPapers.id, userPaperViews.paperId),
-              eq(userPaperViews.userId, userId)
-            )
-          )
-          .where(isNull(userPaperViews.id));
+        // Calculate unread past papers count
+        const papersQuery = await db.execute(sql`
+          SELECT COUNT(*) as count 
+          FROM ${pastPapers} 
+          LEFT JOIN ${userPaperViews} ON ${pastPapers.id} = ${userPaperViews.paperId}
+          AND ${userPaperViews.userId} = ${userId}
+          WHERE ${pastPapers.unitCode} = ${unit.unitCode}
+          AND ${userPaperViews.id} IS NULL
+        `);
+        const [unreadPapers] = papersQuery;
         
-        const notificationCount = unreadNotes.count + pendingAssignments.count + unreadPapers.count;
+        // Just use one total for all notifications combined
+        const notificationCount = 
+          parseInt(unreadNotes.count as string) + 
+          parseInt(pendingAssignments.count as string) + 
+          parseInt(unreadPapers.count as string);
         
         return {
           ...unit,
@@ -784,6 +779,7 @@ export class DatabaseStorage implements IStorage {
       averageCompletionTime: string;
       totalMilliseconds: number;
       recentCompletions: Array<any>;
+      position: number;
       overallRank: number;
     }> = [];
     
@@ -804,6 +800,7 @@ export class DatabaseStorage implements IStorage {
         recentCompletions: userData.completions
           .sort((a, b) => new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime())
           .slice(0, 3),
+        position: 0, // Will be set after sorting
         overallRank: 0 // Will be set after sorting
       });
     });

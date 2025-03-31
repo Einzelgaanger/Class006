@@ -5,7 +5,7 @@ import session from "express-session";
 import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
 import { storage } from "./storage";
-import { User } from "@shared/schema";
+import { User as UserType } from "@shared/schema";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
@@ -13,13 +13,21 @@ import { v4 as uuidv4 } from "uuid";
 
 declare global {
   namespace Express {
-    interface User extends User {}
+    interface User {
+      id: number;
+      name: string;
+      admissionNumber: string;
+      password: string;
+      profileImageUrl: string | null;
+      rank: number | null;
+      role: string | null;
+    }
   }
 }
 
 const scryptAsync = promisify(scrypt);
 
-async function hashPassword(password: string) {
+export async function hashPassword(password: string) {
   const salt = randomBytes(16).toString("hex");
   const buf = (await scryptAsync(password, salt, 64)) as Buffer;
   return `${buf.toString("hex")}.${salt}`;
@@ -155,7 +163,7 @@ export function setupAuth(app: Express) {
       
       const user = await storage.getUser(req.user.id);
       
-      if (!(await comparePasswords(currentPassword, user.password))) {
+      if (!user || !(await comparePasswords(currentPassword, user.password))) {
         return res.status(400).send("Current password is incorrect");
       }
       

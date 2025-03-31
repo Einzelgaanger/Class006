@@ -10,6 +10,7 @@ export const users = pgTable("users", {
   password: text("password").notNull(),
   profileImageUrl: text("profile_image_url"),
   rank: integer("rank"),
+  role: text("role").default("student"),
 });
 
 // Units Table
