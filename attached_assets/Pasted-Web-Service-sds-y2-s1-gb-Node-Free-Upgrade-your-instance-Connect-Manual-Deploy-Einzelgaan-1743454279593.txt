@@ -1,0 +1,212 @@
+Web Service
+sds-y2-s1-gb
+Node
+Free
+Upgrade your instance
+
+Connect
+
+Manual Deploy
+Einzelgaanger / Assignments
+main
+https://sds-y2-s1-gb.onrender.com
+
+Your free instance will spin down with inactivity, which can delay requests by 50 seconds or more.
+Upgrade now
+March 31, 2025 at 11:42 PM
+live
+7cd4c00
+first commit
+
+All logs
+Search
+Search
+
+Live tail
+GMT+3
+
+
+==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
+==> Detected service running on port 5000
+8:49:47 PM [express] POST /api/login 401 in 109ms
+AUTHENTICATION FAILED: User not found with admission number: 180963
+Searching for user with name: "Alfred Mulinge" and admission: "180963"
+Trying to find user with more flexible matching
+Trying with admission number only: 180963
+No user found with name "Alfred Mulinge" and admission "180963"
+FIRST USER: {"id":2,"name":"Teacher Account","admissionNumber":"TEACHER001","password":"1cfc617c6c5933d78d440eb4423d77689c80f38fab6c7a25bcce55c3f16a66cc9c63aff6107904d96ee19d06483dfb85cfacf1a2b6fc8e0ab049a230983eb8ed.e6d5f3a787e056cad268ac5898555049","profileImageUrl":null,"rank":null,"role":"teacher"}
+USERS IN DATABASE: 2 users found
+Total users in database: 2
+No exact match found, doing flexible search for Alfred Mulinge, 180963
+}
+  "role": "teacher"
+  "rank": null,
+  "profileImageUrl": null,
+  "password": "1cfc617c6c5933d78d440eb4423d77689c80f38fab6c7a25bcce55c3f16a66cc9c63aff6107904d96ee19d06483dfb85cfacf1a2b6fc8e0ab049a230983eb8ed.e6d5f3a787e056cad268ac5898555049",
+  "admissionNumber": "TEACHER001",
+  "name": "Teacher Account",
+  "id": 2,
+FIRST USER: {
+USERS IN DATABASE: 2 users found
+LOGIN ATTEMPT - Name: Alfred Mulinge, Admission: 180963, Password: correct-default
+8:48:52 PM [express] POST /api/forgot-password 400 in 21ms :: {"success":false,"message":"Could not find an account with…
+User not found for password reset: Alfred Mulinge, 180963
+Found 2 users in database
+Password reset attempt for Alfred Mulinge, 180963 with valid secret key
+Password reset attempt for: Alfred Mulinge, 180963
+8:48:39 PM [express] POST /api/login 401 in 23ms
+AUTHENTICATION FAILED: User not found with admission number: 180963
+Searching for user with name: "Alfred Mulinge" and admission: "180963"
+Trying to find user with more flexible matching
+Trying with admission number only: 180963
+No user found with name "Alfred Mulinge" and admission "180963"
+FIRST USER: {"id":2,"name":"Teacher Account","admissionNumber":"TEACHER001","password":"1cfc617c6c5933d78d440eb4423d77689c80f38fab6c7a25bcce55c3f16a66cc9c63aff6107904d96ee19d06483dfb85cfacf1a2b6fc8e0ab049a230983eb8ed.e6d5f3a787e056cad268ac5898555049","profileImageUrl":null,"rank":null,"role":"teacher"}
+USERS IN DATABASE: 2 users found
+Total users in database: 2
+No exact match found, doing flexible search for Alfred Mulinge, 180963
+}
+  "role": "teacher"
+  "rank": null,
+  "profileImageUrl": null,
+  "password": "1cfc617c6c5933d78d440eb4423d77689c80f38fab6c7a25bcce55c3f16a66cc9c63aff6107904d96ee19d06483dfb85cfacf1a2b6fc8e0ab049a230983eb8ed.e6d5f3a787e056cad268ac5898555049",
+  "admissionNumber": "TEACHER001",
+  "name": "Teacher Account",
+  "id": 2,
+FIRST USER: {
+USERS IN DATABASE: 2 users found
+LOGIN ATTEMPT - Name: Alfred Mulinge, Admission: 180963, Password: correct-default
+8:48:39 PM [express] GET /api/dashboard/activities 200 in 21ms :: {"0":{"id":2,"type":"assignment","title":"Completed As…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:48:38 PM [express] GET /api/dashboard/stats 200 in 62ms :: {"assignmentsCount":"1","notesCount":"1","pastPapersCount":…
+Successfully deserialized user: Samsam Abdul Nassir
+8:48:38 PM [express] GET /api/dashboard/deadlines 200 in 31ms :: {"0":{"id":2,"title":"TERM PAPER WORK","description":"T…
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+8:48:33 PM [express] GET /api/units 200 in 669ms :: {"0":{"id":1,"unitCode":"MAT 2101","name":"Integral Calculus","descr…
+8:48:33 PM [express] GET /api/units/MAT%202102/assignments 200 in 661ms :: {"0":{"id":3,"title":"Real analysis","descrip…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:48:32 PM [express] POST /api/units/MAT%202102/assignments 201 in 46ms :: {"id":3,"title":"Real analysis","description"…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:48:31 PM [express] POST /api/login 401 in 30ms
+AUTHENTICATION FAILED: User not found with admission number: 180963
+Searching for user with name: "Alfred Mulinge" and admission: "180963"
+Trying to find user with more flexible matching
+Trying with admission number only: 180963
+No user found with name "Alfred Mulinge" and admission "180963"
+FIRST USER: {"id":2,"name":"Teacher Account","admissionNumber":"TEACHER001","password":"1cfc617c6c5933d78d440eb4423d77689c80f38fab6c7a25bcce55c3f16a66cc9c63aff6107904d96ee19d06483dfb85cfacf1a2b6fc8e0ab049a230983eb8ed.e6d5f3a787e056cad268ac5898555049","profileImageUrl":null,"rank":null,"role":"teacher"}
+USERS IN DATABASE: 2 users found
+Total users in database: 2
+No exact match found, doing flexible search for Alfred Mulinge, 180963
+}
+  "role": "teacher"
+  "rank": null,
+  "profileImageUrl": null,
+  "password": "1cfc617c6c5933d78d440eb4423d77689c80f38fab6c7a25bcce55c3f16a66cc9c63aff6107904d96ee19d06483dfb85cfacf1a2b6fc8e0ab049a230983eb8ed.e6d5f3a787e056cad268ac5898555049",
+  "admissionNumber": "TEACHER001",
+  "name": "Teacher Account",
+  "id": 2,
+FIRST USER: {
+USERS IN DATABASE: 2 users found
+LOGIN ATTEMPT - Name: Alfred Mulinge, Admission: 180963, Password: correct-default
+8:48:16 PM [express] GET /api/user 401 in 5ms
+8:48:07 PM [express] POST /api/logout 200 in 14ms
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:48:00 PM [express] GET /api/units 200 in 642ms :: {"0":{"id":1,"unitCode":"MAT 2101","name":"Integral Calculus","descr…
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+8:48:00 PM [express] GET /api/dashboard/stats 200 in 242ms :: {"assignmentsCount":"0","notesCount":"1","pastPapersCount"…
+Successfully deserialized user: Samsam Abdul Nassir
+8:48:00 PM [express] GET /api/dashboard/activities 200 in 43ms :: {"0":{"id":2,"type":"assignment","title":"Completed As…
+Deserializing user with id: 1
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:48:00 PM [express] GET /api/dashboard/deadlines 200 in 18ms :: {"0":{"id":2,"title":"TERM PAPER WORK","description":"T…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:47:59 PM [express] GET /api/user 304 in 17ms :: {"id":1,"name":"Samsam Abdul Nassir","admissionNumber":"163336","passw…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:46:31 PM [express] GET /api/units/MAT%202102/notes 200 in 832ms :: {}
+8:46:31 PM [express] GET /api/units/MAT%202102/assignments 200 in 738ms :: {}
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+8:46:31 PM [express] GET /api/units/MAT%202102 200 in 675ms :: {"id":2,"unitCode":"MAT 2102","name":"Real Analysis","des…
+8:46:31 PM [express] GET /api/units/MAT%202102/pastpapers 500 in 670ms :: {"error":"column past_papers.description does …
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+Deserializing user with id: 1
+Deserializing user with id: 1
+Deserializing user with id: 1
+==> Your service is live 🎉
+8:45:17 PM [express] serving on port 5000
+8:45:17 PM [db-init] Database tables already exist
+8:45:17 PM [db-init] Initializing database...
+Using database: External database (via DATABASE_URL)
+Starting server in production mode
+Environment: production
+Connecting to database: dpg-cvkakh95pdvs73eco48g-a/classmate_portal_db?sslmode=require
+==> Running 'NODE_ENV=production node dist/index.js'
+==> Deploying...
+==> Build successful 🎉
+==> Uploaded in 6.3s. Compression took 3.3s
+==> Uploading build...
+⚡ Done in 6ms
+  dist/index.js  56.9kb
+✓ built in 3.60s
+../dist/public/assets/index-DmshaITy.js   442.92 kB │ gzip: 130.75 kB
+../dist/public/assets/index-BA7CvEQ3.css   67.17 kB │ gzip:  11.58 kB
+../dist/public/index.html                   2.21 kB │ gzip:   0.86 kB
+computing gzip size...
+rendering chunks...
+✓ 2033 modules transformed.
+transforming...
+vite v5.4.14 building for production...
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+> rest-express@1.0.0 build
+Run `npm audit` for details.
+  npm audit fix --force
+To address all issues (including breaking changes), run:
+  npm audit fix
+To address issues that do not require attention, run:
+8 moderate severity vulnerabilities
+  run `npm fund` for details
+63 packages are looking for funding
+up to date, audited 496 packages in 3s
+==> Running build command 'npm install --include=dev && npm run build'...
+==> Docs on specifying a bun version: https://render.com/docs/bun-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Node.js version 22.12.0 (default)
+==> Transferred 242MB in 8s. Extraction took 4s.
+==> Downloading cache...
+==> Checking out commit 7cd4c00dec5dc7ee55e2bb647d049a2a7bbe3fe3 in branch main
+==> Cloning from https://github.com/Einzelgaanger/Assignments
+==> It looks like we don't have access to your repo, but we'll try to clone it anyway.

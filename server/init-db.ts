@@ -105,7 +105,8 @@ export async function initializeDatabase() {
         CREATE TABLE IF NOT EXISTS past_papers (
           id SERIAL PRIMARY KEY,
           title TEXT NOT NULL,
-          year TEXT,
+          description TEXT NOT NULL,
+          year TEXT NOT NULL,
           file_url TEXT,
           unit_code TEXT NOT NULL,
           user_id INTEGER NOT NULL REFERENCES users(id),

@@ -2,6 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { initializeDatabase } from "./init-db";
+import { seed } from "./seed";
 import fs from "fs";
 import path from "path";
 
@@ -85,6 +86,14 @@ app.use((req, res, next) => {
 (async () => {
   // Initialize database before setting up routes
   await initializeDatabase();
+  
+  // Run seed script to ensure all required users and data are present
+  try {
+    await seed();
+    log("Seed process completed", "seed");
+  } catch (error) {
+    log(`Seed error: ${(error as Error).message}`, "seed");
+  }
   
   const server = await registerRoutes(app);
 

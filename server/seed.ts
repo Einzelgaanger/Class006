@@ -11,47 +11,100 @@ async function hashPassword(password: string) {
   return `${buf.toString("hex")}.${salt}`;
 }
 
-async function seed() {
+export async function seed() {
   console.log("Starting seed process...");
   
   // Check if users already exist
   const existingUsers = await db.select().from(users);
   if (existingUsers.length > 0) {
-    console.log("Users already exist, skipping user seed");
+    // Check if Alfred Mulinge exists
+    const alfredExists = existingUsers.some(u => 
+      u.name.toLowerCase() === "alfred mulinge" && 
+      u.admissionNumber === "180963"
+    );
+    
+    if (!alfredExists) {
+      console.log("Adding missing users...");
+      const defaultPassword = await hashPassword("sds#website");
+      
+      // Add Alfred Mulinge and other missing users
+      await db.insert(users).values([
+        {
+          name: "Alfred Mulinge",
+          admissionNumber: "180963",
+          password: defaultPassword,
+          profileImageUrl: null,
+          rank: 4,
+          role: "student"
+        },
+        {
+          name: "Victoria Mutheu",
+          admissionNumber: "184087",
+          password: defaultPassword,
+          profileImageUrl: null,
+          rank: 5,
+          role: "student"
+        }
+      ]).catch(err => {
+        console.error("Error adding missing users:", err.message);
+      });
+    }
+    
+    console.log("Users already exist, skipping full user seed");
   } else {
     console.log("Seeding users...");
     // Create default password for all users
     const defaultPassword = await hashPassword("sds#website");
     
-    // Create test users
+    // Create users
     await db.insert(users).values([
+      {
+        name: "Samsam Abdul Nassir",
+        admissionNumber: "163336",
+        password: defaultPassword,
+        profileImageUrl: null,
+        rank: 1,
+        role: "student"
+      },
+      {
+        name: "Teacher Account",
+        admissionNumber: "TEACHER001",
+        password: defaultPassword,
+        profileImageUrl: null,
+        rank: null,
+        role: "teacher"
+      },
       {
         name: "John Doe",
         admissionNumber: "SDS001",
         password: defaultPassword,
         profileImageUrl: null,
-        rank: 1
+        rank: 2,
+        role: "student"
       },
       {
         name: "Jane Smith",
         admissionNumber: "SDS002",
         password: defaultPassword,
         profileImageUrl: null,
-        rank: 2
-      },
-      {
-        name: "Bob Johnson",
-        admissionNumber: "SDS003",
-        password: defaultPassword,
-        profileImageUrl: null,
-        rank: 3
+        rank: 3,
+        role: "student"
       },
       {
         name: "Alfred Mulinge",
         admissionNumber: "180963",
         password: defaultPassword,
         profileImageUrl: null,
-        rank: 4
+        rank: 4,
+        role: "student"
+      },
+      {
+        name: "Victoria Mutheu", 
+        admissionNumber: "184087",
+        password: defaultPassword,
+        profileImageUrl: null,
+        rank: 5,
+        role: "student"
       }
     ]);
     console.log("Users seeded successfully!");
