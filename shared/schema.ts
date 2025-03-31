@@ -111,6 +111,12 @@ export const passwordUpdateSchema = z.object({
   newPassword: z.string().min(6, "Password must be at least 6 characters"),
 });
 
+export const forgotPasswordSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  admissionNumber: z.string().min(1, "Admission number is required"),
+  secretKey: z.string().min(1, "Secret key is required"),
+});
+
 export const insertNoteSchema = createInsertSchema(notes).pick({
   title: true,
   description: true,

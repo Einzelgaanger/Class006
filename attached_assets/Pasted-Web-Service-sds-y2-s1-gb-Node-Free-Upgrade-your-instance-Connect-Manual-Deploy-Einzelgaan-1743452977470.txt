@@ -1,0 +1,529 @@
+Web Service
+sds-y2-s1-gb
+Node
+Free
+Upgrade your instance
+
+Connect
+
+Manual Deploy
+Einzelgaanger / Class-Assg
+main
+https://sds-y2-s1-gb.onrender.com
+
+Your free instance will spin down with inactivity, which can delay requests by 50 seconds or more.
+Upgrade now
+
+All logs
+Search
+Search
+
+Live tail
+GMT+3
+
+
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:28:45 PM [express] GET /api/units 304 in 403ms :: {"0":{"id":1,"unitCode":"MAT 2101","name":"Integral Calculus","descr…
+8:28:45 PM [express] GET /api/dashboard/deadlines 200 in 241ms :: {}
+Successfully deserialized user: Samsam Abdul Nassir
+8:28:45 PM [express] GET /api/dashboard/activities 200 in 183ms :: {}
+8:28:44 PM [express] GET /api/dashboard/stats 304 in 156ms :: {"assignmentsCount":"0","notesCount":"0","pastPapersCount"…
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:28:44 PM [express] GET /api/user 304 in 9ms :: {"id":1,"name":"Samsam Abdul Nassir","admissionNumber":"163336","passwo…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:28:36 PM [express] GET /api/units/MAT%202101/rankings 304 in 16ms :: {}
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:28:35 PM [express] GET /api/units/MAT%202101/assignments 200 in 49ms :: {}
+8:28:35 PM [express] GET /api/units 304 in 42ms :: {"0":{"id":1,"unitCode":"MAT 2101","name":"Integral Calculus","descri…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:28:35 PM [express] DELETE /api/units/MAT%202101/assignments/1 200 in 31ms :: {"success":true}
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:28:20 PM [express] GET /api/dashboard/deadlines 304 in 13ms :: {"0":{"id":1,"title":"thhuu","description":"zxcvbnm cvb…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:28:19 PM [express] GET /api/units 304 in 25ms :: {"0":{"id":1,"unitCode":"MAT 2101","name":"Integral Calculus","descri…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:28:19 PM [express] GET /api/dashboard/stats 304 in 105ms :: {"assignmentsCount":"0","notesCount":"0","pastPapersCount"…
+8:28:19 PM [express] GET /api/dashboard/activities 304 in 89ms :: {"0":{"id":1,"type":"assignment","title":"Completed As…
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:28:19 PM [express] GET /api/user 304 in 8ms :: {"id":1,"name":"Samsam Abdul Nassir","admissionNumber":"163336","passwo…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:28:18 PM [express] GET /api/units 304 in 859ms :: {"0":{"id":1,"unitCode":"MAT 2101","name":"Integral Calculus","descr…
+8:28:18 PM [express] GET /api/units/MAT%202101/assignments 304 in 820ms :: {"0":{"id":1,"title":"thhuu","description":"z…
+8:28:18 PM [express] GET /api/units/MAT%202101/notes 304 in 835ms :: {}
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:28:17 PM [express] GET /api/units/MAT%202101 304 in 352ms :: {"id":1,"unitCode":"MAT 2101","name":"Integral Calculus",…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:28:17 PM [express] GET /api/units/MAT%202101/pastpapers 500 in 196ms :: {"error":"column past_papers.description does …
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+8:28:17 PM [express] GET /api/user 304 in 8ms :: {"id":1,"name":"Samsam Abdul Nassir","admissionNumber":"163336","passwo…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:27:35 PM [express] GET /api/dashboard/activities 200 in 44ms :: {"0":{"id":1,"type":"assignment","title":"Completed As…
+8:27:35 PM [express] GET /api/units 304 in 662ms :: {"0":{"id":1,"unitCode":"MAT 2101","name":"Integral Calculus","descr…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:27:35 PM [express] GET /api/dashboard/deadlines 200 in 454ms :: {"0":{"id":1,"title":"thhuu","description":"zxcvbnm cv…
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+8:27:34 PM [express] GET /api/dashboard/stats 200 in 26ms :: {"assignmentsCount":"0","notesCount":"0","pastPapersCount":…
+Deserializing user with id: 1
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:27:34 PM [express] GET /api/user 304 in 18ms :: {"id":1,"name":"Samsam Abdul Nassir","admissionNumber":"163336","passw…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:27:28 PM [express] GET /api/units/MAT%202101 200 in 18ms :: {"id":1,"unitCode":"MAT 2101","name":"Integral Calculus","…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:27:28 PM [express] GET /api/units/MAT%202101/pastpapers 500 in 10ms :: {"error":"column past_papers.description does n…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:27:28 PM [express] GET /api/units/MAT%202101/notes 200 in 13ms :: {}
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:27:19 PM [express] GET /api/units/DAT%202102/pastpapers 500 in 98ms :: {"error":"column past_papers.description does n…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+==> Your service is live 🎉
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:26:48 PM [express] GET /api/units/DAT%202102/assignments 200 in 215ms :: []
+Successfully deserialized user: Samsam Abdul Nassir
+8:26:48 PM [express] GET /api/units/DAT%202102/pastpapers 500 in 194ms :: {"error":"column past_pape…
+8:26:48 PM [express] GET /api/units/DAT%202102 200 in 190ms :: {"id":5,"unitCode":"DAT 2102","name":…
+8:26:48 PM [express] GET /api/units/DAT%202102/notes 200 in 190ms :: []
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+Deserializing user with id: 1
+Deserializing user with id: 1
+8:26:40 PM [express] serving on port 5000
+8:26:40 PM [db-init] Database tables already exist
+8:26:40 PM [db-init] Initializing database...
+Using database: External database (via DATABASE_URL)
+Starting server in production mode
+Environment: production
+Connecting to database: dpg-cvkakh95pdvs73eco48g-a/classmate_portal_db?sslmode=require
+==> Running 'NODE_ENV=production node dist/index.js'
+8:26:11 PM [express] GET /api/units/MAT%202101/assignments 304 in 24ms :: [{"id":1,"title":"thhuu","…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+==> Deploying...
+8:25:19 PM [express] GET /api/units 304 in 198ms :: [{"id":1,"unitCode":"MAT 2101","name":"Integral …
+8:25:19 PM [express] GET /api/dashboard/activities 304 in 193ms :: [{"id":1,"type":"assignment","tit…
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+8:25:18 PM [express] GET /api/dashboard/deadlines 304 in 13ms :: [{"id":1,"title":"thhuu","descripti…
+Successfully deserialized user: Samsam Abdul Nassir
+8:25:18 PM [express] GET /api/dashboard/stats 304 in 25ms :: {"assignmentsCount":"0","notesCount":"0…
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:25:17 PM [express] GET /api/user 304 in 8ms :: {"id":1,"name":"Samsam Abdul Nassir","admissionNumb…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:25:00 PM [express] PATCH /api/user/password 400 in 274ms
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:24:57 PM [express] PATCH /api/user/password 400 in 216ms
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:24:56 PM [express] PATCH /api/user/password 400 in 226ms
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:24:55 PM [express] PATCH /api/user/password 400 in 273ms
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:24:25 PM [express] GET /api/units 304 in 20ms :: [{"id":1,"unitCode":"MAT 2101","name":"Integral C…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:24:25 PM [express] GET /api/units/MAT%202101/assignments 200 in 18ms :: [{"id":1,"title":"thhuu","…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:24:25 PM [express] POST /api/units/MAT%202101/assignments/1/complete 200 in 12ms :: {"alreadyCompl…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:24:24 PM [express] PATCH /api/user/password 400 in 196ms
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:24:05 PM [express] POST /api/units/MAT%202101/pastpapers 500 in 862ms :: {"error":"column \"descri…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:21:16 PM [express] POST /api/units/MAT%202101/pastpapers 500 in 722ms :: {"error":"column \"descri…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:20:23 PM [express] POST /api/units/MAT%202101/pastpapers 500 in 362ms :: {"error":"column \"descri…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:20:01 PM [express] POST /api/units/MAT%202101/pastpapers 500 in 367ms :: {"error":"column \"descri…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:19:29 PM [express] POST /api/units/MAT%202101/pastpapers 500 in 681ms :: {"error":"column \"descri…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:18:45 PM [express] POST /api/units/MAT%202101/pastpapers 500 in 681ms :: {"error":"column \"descri…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:16:30 PM [express] GET /api/units/MAT%202101/rankings 200 in 27ms :: [{"userId":1,"name":"Samsam A…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:16:24 PM [express] GET /api/units/MAT%202101 304 in 103ms :: {"id":1,"unitCode":"MAT 2101","name":…
+8:16:24 PM [express] GET /api/units/MAT%202101/notes 304 in 95ms :: []
+8:16:24 PM [express] GET /api/units/MAT%202101/pastpapers 500 in 91ms :: {"error":"column past_paper…
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+8:16:24 PM [express] GET /api/units/MAT%202101/assignments 200 in 14ms :: [{"id":1,"title":"thhuu","…
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:16:17 PM [express] GET /api/units 304 in 175ms :: [{"id":1,"unitCode":"MAT 2101","name":"Integral …
+8:16:17 PM [express] GET /api/dashboard/deadlines 304 in 163ms :: [{"id":1,"title":"thhuu","descript…
+8:16:17 PM [express] GET /api/dashboard/stats 304 in 106ms :: {"assignmentsCount":"0","notesCount":"…
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+8:16:17 PM [express] GET /api/dashboard/activities 304 in 69ms :: [{"id":1,"type":"assignment","titl…
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+8:16:16 PM [express] GET /api/user 304 in 8ms :: {"id":1,"name":"Samsam Abdul Nassir","admissionNumb…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:16:12 PM [express] GET /api/dashboard/stats 304 in 227ms :: {"assignmentsCount":"0","notesCount":"…
+8:16:12 PM [express] GET /api/units 304 in 143ms :: [{"id":1,"unitCode":"MAT 2101","name":"Integral …
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:16:12 PM [express] GET /api/dashboard/activities 200 in 31ms :: [{"id":1,"type":"assignment","titl…
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:16:11 PM [express] GET /api/dashboard/deadlines 200 in 20ms :: [{"id":1,"title":"thhuu","descripti…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:16:10 PM [express] GET /api/user 200 in 14ms :: {"id":1,"name":"Samsam Abdul Nassir","admissionNum…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:16:03 PM [express] GET /api/units 200 in 95ms :: [{"id":1,"unitCode":"MAT 2101","name":"Integral C…
+8:16:03 PM [express] GET /api/units/MAT%202101/assignments 200 in 69ms :: [{"id":1,"title":"thhuu","…
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+8:16:03 PM [express] POST /api/units/MAT%202101/assignments/1/complete 200 in 34ms :: {"id":1,"assig…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:15:20 PM [express] GET /api/units/MAT%202101/pastpapers 500 in 15ms :: {"error":"column past_paper…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:15:18 PM [express] GET /api/units/DAT%202101/assignments 304 in 71ms :: []
+8:15:18 PM [express] GET /api/units/DAT%202101 304 in 75ms :: {"id":4,"unitCode":"DAT 2101","name":"…
+8:15:18 PM [express] GET /api/units/DAT%202101/notes 304 in 68ms :: []
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+8:15:18 PM [express] GET /api/units/DAT%202101/pastpapers 500 in 51ms :: {"error":"column past_paper…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+Deserializing user with id: 1
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:15:15 PM [express] GET /api/units/MAT%202102/assignments 200 in 217ms :: []
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+8:15:15 PM [express] GET /api/units/MAT%202102/notes 200 in 214ms :: []
+8:15:15 PM [express] GET /api/units/MAT%202102/pastpapers 500 in 103ms :: {"error":"column past_pape…
+Successfully deserialized user: Samsam Abdul Nassir
+8:15:15 PM [express] GET /api/units/MAT%202102 200 in 20ms :: {"id":2,"unitCode":"MAT 2102","name":"…
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+8:15:10 PM [express] GET /api/units/MAT%202101/rankings 200 in 25ms :: []
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:14:27 PM [express] GET /api/units/MAT%202101/pastpapers 500 in 10ms :: {"error":"column past_paper…
+Successfully deserialized user: Samsam Abdul Nassir
+8:14:27 PM [express] GET /api/units/MAT%202101/assignments 200 in 16ms :: [{"id":1,"title":"thhuu","…
+Deserializing user with id: 1
+8:14:27 PM [express] GET /api/units/MAT%202101 200 in 11ms :: {"id":1,"unitCode":"MAT 2101","name":"…
+8:14:27 PM [express] GET /api/units/MAT%202101/notes 200 in 13ms :: []
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:14:25 PM [express] GET /api/units/MAT%202101 304 in 94ms :: {"id":1,"unitCode":"MAT 2101","name":"…
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:14:25 PM [express] GET /api/units/MAT%202101/notes 304 in 16ms :: []
+8:14:25 PM [express] GET /api/units/MAT%202101/pastpapers 500 in 14ms :: {"error":"column past_paper…
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+8:14:25 PM [express] GET /api/units/MAT%202101/assignments 304 in 11ms :: [{"id":1,"title":"thhuu","…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:14:16 PM [express] GET /api/dashboard/deadlines 304 in 16ms :: [{"id":1,"title":"thhuu","descripti…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:14:16 PM [express] GET /api/dashboard/activities 304 in 22ms :: []
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:14:15 PM [express] GET /api/units 304 in 102ms :: [{"id":1,"unitCode":"MAT 2101","name":"Integral …
+8:14:15 PM [express] GET /api/dashboard/stats 200 in 35ms :: {"assignmentsCount":"1","notesCount":"0…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+8:14:15 PM [express] GET /api/user 200 in 12ms :: {"id":1,"name":"Samsam Abdul Nassir","admissionNum…
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:14:12 PM [express] GET /api/dashboard/deadlines 200 in 26ms :: [{"id":1,"title":"thhuu","descripti…
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+8:14:09 PM [express] GET /api/units 200 in 23ms :: [{"id":1,"unitCode":"MAT 2101","name":"Integral C…
+8:14:09 PM [express] GET /api/units/MAT%202101/assignments 200 in 14ms :: [{"id":1,"title":"thhuu","…
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+8:14:09 PM [express] POST /api/units/MAT%202101/assignments 201 in 54ms :: {"id":1,"title":"thhuu","…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:14:04 PM [express] GET /api/dashboard/activities 304 in 19ms :: []
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:14:04 PM [express] GET /api/dashboard/stats 304 in 29ms :: {"assignmentsCount":"0","notesCount":"0…
+8:14:04 PM [express] GET /api/dashboard/deadlines 304 in 16ms :: []
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:13:55 PM [express] GET /api/units/MAT%202101 304 in 271ms :: {"id":1,"unitCode":"MAT 2101","name":…
+Successfully deserialized user: Samsam Abdul Nassir
+8:13:55 PM [express] GET /api/units/MAT%202101/pastpapers 500 in 90ms :: {"error":"column past_paper…
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:13:55 PM [express] GET /api/units/MAT%202101/notes 304 in 15ms :: []
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:13:55 PM [express] GET /api/units/MAT%202101/assignments 304 in 12ms :: []
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1

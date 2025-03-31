@@ -138,18 +138,29 @@ export function setupAuth(app: Express) {
             }
           }
           
-          // 3. Last resort - try with default test account if we have it
+          // Remove the fallback to Samsam Abdul Nassir's account to prevent wrong user authentication
+          // We'll use a more accurate approach to find the correct user instead
           if (!user && password === 'sds#website') {
-            console.log('Trying with default test account');
+            console.log('Trying to find user with more flexible matching');
             try {
-              // Try to find Samsam Abdul Nassir as a fallback
-              const [testUser] = await db.select().from(users).where(eq(users.name, 'Samsam Abdul Nassir'));
-              if (testUser) {
-                console.log('Found default test account, using it for login');
-                user = testUser;
+              // Try a case-insensitive search through all users
+              const allUsers = await db.select().from(users);
+              
+              // Log what we're searching for
+              console.log(`Searching for user with name: "${req.body.name}" and admission: "${admissionNumber}"`);
+              
+              // Try to find an exact match first (but case insensitive)
+              let foundUser = allUsers.find(u => 
+                u.name.toLowerCase() === req.body.name.toLowerCase() && 
+                u.admissionNumber.toLowerCase() === admissionNumber.toLowerCase()
+              );
+              
+              if (foundUser) {
+                console.log(`Found matching user with ID ${foundUser.id}: ${foundUser.name}`);
+                user = foundUser;
               }
             } catch (err) {
-              console.error('Error searching for test account:', err);
+              console.error('Error during flexible user lookup:', err);
             }
           }
           
@@ -285,6 +296,8 @@ export function setupAuth(app: Express) {
     try {
       const { name, admissionNumber, secretKey } = req.body;
       
+      console.log(`Password reset attempt for: ${name}, ${admissionNumber}`);
+      
       if (!name || !admissionNumber || !secretKey) {
         return res.status(400).json({ 
           success: false,
@@ -305,8 +318,15 @@ export function setupAuth(app: Express) {
       
       console.log(`Password reset attempt for ${name}, ${admissionNumber} with valid secret key`);
       
-      // Find the user
-      const user = await storage.getUserByCredentials(name, admissionNumber);
+      // Find the user with flexible matching
+      const allUsers = await db.select().from(users);
+      console.log(`Found ${allUsers.length} users in database`);
+      
+      // Try case-insensitive matching
+      let user = allUsers.find(u => 
+        u.name.toLowerCase() === name.toLowerCase() && 
+        u.admissionNumber.toLowerCase() === admissionNumber.toLowerCase()
+      );
       
       if (!user) {
         console.log(`User not found for password reset: ${name}, ${admissionNumber}`);
@@ -316,6 +336,8 @@ export function setupAuth(app: Express) {
           message: "Could not find an account with that name and admission number."
         });
       }
+      
+      console.log(`Found user for password reset: ${user.name} (ID: ${user.id})`);
       
       // Reset password to default
       const hashedPassword = await hashPassword("sds#website");

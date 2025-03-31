@@ -110,15 +110,49 @@ export class DatabaseStorage implements IStorage {
   }
   
   async getUserByCredentials(name: string, admissionNumber: string): Promise<User | undefined> {
-    const [user] = await db.select()
-      .from(users)
-      .where(
-        and(
-          eq(users.name, name),
-          eq(users.admissionNumber, admissionNumber)
-        )
+    try {
+      // First try exact match (case-sensitive)
+      let [user] = await db.select()
+        .from(users)
+        .where(
+          and(
+            eq(users.name, name),
+            eq(users.admissionNumber, admissionNumber)
+          )
+        );
+
+      if (user) return user;
+
+      // If no match, try with more flexible approach
+      console.log(`No exact match found, doing flexible search for ${name}, ${admissionNumber}`);
+      
+      // Get all users and do case-insensitive comparison
+      const allUsers = await db.select().from(users);
+      console.log(`Total users in database: ${allUsers.length}`);
+      
+      // Log the first few users for debugging
+      if (allUsers.length > 0) {
+        console.log(`USERS IN DATABASE: ${allUsers.length} users found`);
+        console.log(`FIRST USER: ${JSON.stringify(allUsers[0])}`);
+      }
+      
+      // Find a match using case-insensitive string comparison
+      user = allUsers.find(u => 
+        u.name.toLowerCase() === name.toLowerCase() && 
+        u.admissionNumber.toLowerCase() === admissionNumber.toLowerCase()
       );
-    return user;
+      
+      if (user) {
+        console.log(`Found user with flexible matching: ${user.name} (ID: ${user.id})`);
+      } else {
+        console.log(`No user found with name "${name}" and admission "${admissionNumber}"`);
+      }
+      
+      return user;
+    } catch (error) {
+      console.error("Error getting user by credentials:", error);
+      return undefined;
+    }
   }
   
   async updateUserPassword(id: number, hashedPassword: string): Promise<User> {

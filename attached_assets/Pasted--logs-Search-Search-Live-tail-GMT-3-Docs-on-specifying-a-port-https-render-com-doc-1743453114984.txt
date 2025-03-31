@@ -1,0 +1,122 @@
+ logs
+Search
+Search
+
+Live tail
+GMT+3
+
+
+==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
+==> Detected service running on port 5000
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:31:23 PM [express] POST /api/login 200 in 472ms :: {"id":1,"name":"Samsam Abdul Nassir","admissionNumber":"163336","pa…
+AUTHENTICATION SUCCESS: Login successful for: Samsam Abdul Nassir
+Using special case for default password
+Found default test account, using it for login
+Trying with default test account
+Trying with admission number only: 184087
+}
+  "role": "teacher"
+  "rank": null,
+  "profileImageUrl": null,
+  "password": "1cfc617c6c5933d78d440eb4423d77689c80f38fab6c7a25bcce55c3f16a66cc9c63aff6107904d96ee19d06483dfb85cfacf1a2b6fc8e0ab049a230983eb8ed.e6d5f3a787e056cad268ac5898555049",
+  "admissionNumber": "TEACHER001",
+  "name": "Teacher Account",
+  "id": 2,
+FIRST USER: {
+USERS IN DATABASE: 2 users found
+LOGIN ATTEMPT - Name: Victoria Mutheu, Admission: 184087, Password: correct-default
+8:30:36 PM [express] POST /api/forgot-password 400 in 8ms :: {"success":false,"message":"Could not find an account with …
+User not found for password reset: Alfred Mulinge, 180963
+Password reset attempt for Alfred Mulinge, 180963 with valid secret key
+8:30:27 PM [express] POST /api/forgot-password 400 in 24ms :: {"success":false,"message":"Could not find an account with…
+User not found for password reset: Alfred Mulinge, 180963
+Password reset attempt for Alfred Mulinge, 180963 with valid secret key
+8:30:05 PM [express] POST /api/logout 200 in 39ms
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:29:55 PM [express] POST /api/login 200 in 385ms :: {"id":1,"name":"Samsam Abdul Nassir","admissionNumber":"163336","pa…
+AUTHENTICATION SUCCESS: Login successful for: Samsam Abdul Nassir
+Using special case for default password
+Found default test account, using it for login
+Trying with default test account
+Trying with admission number only: 180963
+}
+  "role": "teacher"
+  "rank": null,
+  "profileImageUrl": null,
+  "password": "1cfc617c6c5933d78d440eb4423d77689c80f38fab6c7a25bcce55c3f16a66cc9c63aff6107904d96ee19d06483dfb85cfacf1a2b6fc8e0ab049a230983eb8ed.e6d5f3a787e056cad268ac5898555049",
+  "admissionNumber": "TEACHER001",
+  "name": "Teacher Account",
+  "id": 2,
+FIRST USER: {
+USERS IN DATABASE: 2 users found
+LOGIN ATTEMPT - Name: Alfred Mulinge, Admission: 180963, Password: correct-default
+8:29:41 PM [express] POST /api/logout 200 in 109ms
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:28:45 PM [express] GET /api/units 304 in 403ms :: {"0":{"id":1,"unitCode":"MAT 2101","name":"Integral Calculus","descr…
+8:28:45 PM [express] GET /api/dashboard/deadlines 200 in 241ms :: {}
+Successfully deserialized user: Samsam Abdul Nassir
+8:28:45 PM [express] GET /api/dashboard/activities 200 in 183ms :: {}
+8:28:44 PM [express] GET /api/dashboard/stats 304 in 156ms :: {"assignmentsCount":"0","notesCount":"0","pastPapersCount"…
+Successfully deserialized user: Samsam Abdul Nassir
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:28:44 PM [express] GET /api/user 304 in 9ms :: {"id":1,"name":"Samsam Abdul Nassir","admissionNumber":"163336","passwo…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:28:36 PM [express] GET /api/units/MAT%202101/rankings 304 in 16ms :: {}
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:28:35 PM [express] GET /api/units/MAT%202101/assignments 200 in 49ms :: {}
+8:28:35 PM [express] GET /api/units 304 in 42ms :: {"0":{"id":1,"unitCode":"MAT 2101","name":"Integral Calculus","descri…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:28:35 PM [express] DELETE /api/units/MAT%202101/assignments/1 200 in 31ms :: {"success":true}
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:28:20 PM [express] GET /api/dashboard/deadlines 304 in 13ms :: {"0":{"id":1,"title":"thhuu","description":"zxcvbnm cvb…
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+Successfully deserialized user: Samsam Abdul Nassir
+Deserializing user with id: 1
+8:28:19 PM [express] GET /api/units 304 in 25ms :: {"0":{"id":1,"unitCode":"MAT 2101","name":"Integral Calculus","descri…
+Successfully deserialized user: Samsam A
