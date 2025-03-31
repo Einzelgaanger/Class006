@@ -6,7 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Sidebar from "@/components/sidebar";
 import { useState, useEffect } from "react";
 import StatCard from "@/components/StatCard";
-import { CheckCircle, Clock, FileText, Trophy } from "lucide-react";
+import { CheckCircle, Clock, FileText, Trophy, Menu } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { formatDistanceToNow } from "date-fns";
 
 export default function DashboardPage() {
@@ -58,6 +59,16 @@ export default function DashboardPage() {
 
       {/* Main Content */}
       <main className="flex-1 md:ml-64 min-h-screen">
+        <div className="md:hidden p-4 flex items-center">
+          <Button 
+            variant="ghost" 
+            onClick={toggleMobileMenu} 
+            className="text-gray-700 focus:outline-none p-2 mr-2"
+          >
+            <Menu className="h-6 w-6" />
+          </Button>
+          <h1 className="text-xl font-semibold">Dashboard</h1>
+        </div>
         <div className="p-4 md:p-6">
           <div className="mb-6">
             <h1 className="text-2xl font-bold">Dashboard</h1>
@@ -65,7 +76,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6">
             <StatCard
               title="Assignments"
               value={stats?.assignmentsCount ?? 0}

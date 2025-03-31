@@ -20,7 +20,22 @@ type AssignmentFormProps = {
 const formSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
   description: z.string().min(10, "Description must be at least 10 characters"),
-  deadline: z.string().refine(val => !!val, "Deadline is required"),
+  deadline: z.string()
+    .refine(val => {
+      try {
+        // Validate date format
+        return !!val && !isNaN(new Date(val).getTime());
+      } catch (e) {
+        return false;
+      }
+    }, "Please enter a valid date and time")
+    .refine(val => {
+      const now = new Date();
+      const selectedDate = new Date(val);
+      // Allow dates within 5 minutes in the past (to account for form filling time)
+      now.setMinutes(now.getMinutes() - 5);
+      return selectedDate > now;
+    }, "Deadline must be in the future"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -29,12 +44,19 @@ export default function AssignmentForm({ unitCode, isOpen, onClose }: Assignment
   const [file, setFile] = useState<File | null>(null);
   const { toast } = useToast();
 
+  // Set default deadline to 1 week from now
+  const getDefaultDeadline = () => {
+    const date = new Date();
+    date.setDate(date.getDate() + 7); // One week from now
+    return date.toISOString().slice(0, 16); // Format as YYYY-MM-DDTHH:MM for datetime-local input
+  };
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
       description: "",
-      deadline: "",
+      deadline: getDefaultDeadline(),
     },
   });
 
@@ -75,10 +97,16 @@ export default function AssignmentForm({ unitCode, isOpen, onClose }: Assignment
         description: "Assignment has been created successfully",
       });
     },
-    onError: (error) => {
+    onError: (error: Error | unknown) => {
+      let errorMessage = "An unexpected error occurred while creating the assignment";
+      
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: "Error creating assignment",
-        description: error.message,
+        description: errorMessage,
         variant: "destructive",
       });
     },
@@ -150,6 +178,9 @@ export default function AssignmentForm({ unitCode, isOpen, onClose }: Assignment
                       {...field} 
                     />
                   </FormControl>
+                  <FormDescription>
+                    Select a deadline that is in the future.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

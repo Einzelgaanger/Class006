@@ -20,25 +20,8 @@ const Sidebar = ({ isMobileMenuOpen, toggleMobileMenu }: SidebarProps) => {
     queryKey: ["/api/units"],
   });
 
-  // Group units by category
-  const unitsByCategory: Record<string, Unit[]> = {
-    "Mathematics": [],
-    "Statistics": [],
-    "Data Science": [],
-    "Humanities": []
-  };
-
-  units?.forEach(unit => {
-    if (unit.unitCode.startsWith("MAT")) {
-      unitsByCategory["Mathematics"].push(unit);
-    } else if (unit.unitCode.startsWith("STA")) {
-      unitsByCategory["Statistics"].push(unit);
-    } else if (unit.unitCode.startsWith("DAT")) {
-      unitsByCategory["Data Science"].push(unit);
-    } else if (unit.unitCode.startsWith("HED")) {
-      unitsByCategory["Humanities"].push(unit);
-    }
-  });
+  // Keep all units in a single list as requested by the user
+  const allUnits = units || [];
 
   // Get the current user's rank
   const userRank = user?.rank ? `#${user.rank}` : "";
@@ -46,8 +29,8 @@ const Sidebar = ({ isMobileMenuOpen, toggleMobileMenu }: SidebarProps) => {
   return (
     <>
       <aside 
-        className={`bg-white shadow-md w-full md:w-64 md:min-h-screen md:fixed overflow-y-auto transition-all duration-300 z-20 ${
-          isMobileMenuOpen ? "fixed inset-0 h-screen z-50" : "md:block"
+        className={`bg-white shadow-md w-full md:w-64 md:min-h-screen md:fixed overflow-y-auto max-h-screen transition-all duration-300 z-20 ${
+          isMobileMenuOpen ? "fixed inset-0 h-screen z-50" : "hidden md:block"
         }`}
       >
         {/* Mobile Header */}
@@ -97,42 +80,38 @@ const Sidebar = ({ isMobileMenuOpen, toggleMobileMenu }: SidebarProps) => {
             </Link>
           </div>
           
-          {/* Units by category */}
-          {Object.entries(unitsByCategory).map(([category, categoryUnits]) => (
-            categoryUnits.length > 0 && (
-              <div key={category} className="mb-2">
-                <p className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase">{category}</p>
-                
-                {categoryUnits.map(unit => (
-                  <Link key={unit.id} href={`/unit/${unit.unitCode}`}>
-                    <a className={`flex items-center justify-between px-3 py-2 rounded-lg mb-1 ${
-                      location === `/unit/${unit.unitCode}` 
-                        ? "text-primary bg-blue-50 font-medium" 
-                        : "hover:bg-gray-100 transition-colors"
-                    }`}>
-                      <div className="flex items-center">
-                        {unit.unitCode.startsWith("MAT") && <FunctionSquare className="mr-3 h-5 w-5 text-blue-500" />}
-                        {unit.unitCode.startsWith("STA") && <BarChart2 className="mr-3 h-5 w-5 text-green-500" />}
-                        {unit.unitCode.startsWith("DAT") && <Cloud className="mr-3 h-5 w-5 text-purple-500" />}
-                        {unit.unitCode.startsWith("HED") && <Book className="mr-3 h-5 w-5 text-amber-500" />}
-                        <span>{unit.unitCode}: {unit.name}</span>
-                      </div>
-                      {unit.notificationCount > 0 && (
-                        <span className={`${
-                          unit.unitCode.startsWith("MAT") ? "bg-blue-500" :
-                          unit.unitCode.startsWith("STA") ? "bg-green-500" :
-                          unit.unitCode.startsWith("DAT") ? "bg-purple-500" :
-                          "bg-amber-500"
-                        } text-white text-xs rounded-full h-5 min-w-5 flex items-center justify-center px-1`}>
-                          {unit.notificationCount}
-                        </span>
-                      )}
-                    </a>
-                  </Link>
-                ))}
-              </div>
-            )
-          ))}
+          {/* All Units */}
+          <div className="mb-2">
+            <p className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase">Course Units</p>
+            
+            {allUnits.map(unit => (
+              <Link key={unit.id} href={`/unit/${unit.unitCode}`}>
+                <a className={`flex items-center justify-between px-3 py-2 rounded-lg mb-1 ${
+                  location === `/unit/${unit.unitCode}` 
+                    ? "text-primary bg-blue-50 font-medium" 
+                    : "hover:bg-gray-100 transition-colors"
+                }`}>
+                  <div className="flex items-center">
+                    {unit.unitCode.startsWith("MAT") && <FunctionSquare className="mr-3 h-5 w-5 text-blue-500" />}
+                    {unit.unitCode.startsWith("STA") && <BarChart2 className="mr-3 h-5 w-5 text-green-500" />}
+                    {unit.unitCode.startsWith("DAT") && <Cloud className="mr-3 h-5 w-5 text-purple-500" />}
+                    {unit.unitCode.startsWith("HED") && <Book className="mr-3 h-5 w-5 text-amber-500" />}
+                    <span>{unit.unitCode}: {unit.name}</span>
+                  </div>
+                  {unit.notificationCount > 0 && (
+                    <span className={`${
+                      unit.unitCode.startsWith("MAT") ? "bg-blue-500" :
+                      unit.unitCode.startsWith("STA") ? "bg-green-500" :
+                      unit.unitCode.startsWith("DAT") ? "bg-purple-500" :
+                      "bg-amber-500"
+                    } text-white text-xs rounded-full h-5 min-w-5 flex items-center justify-center px-1`}>
+                      {unit.notificationCount}
+                    </span>
+                  )}
+                </a>
+              </Link>
+            ))}
+          </div>
           
           <div className="mt-4">
             <p className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase">Settings</p>

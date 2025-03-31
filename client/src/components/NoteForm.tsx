@@ -71,10 +71,16 @@ export default function NoteForm({ unitCode, isOpen, onClose }: NoteFormProps) {
         description: "Note has been uploaded successfully",
       });
     },
-    onError: (error) => {
+    onError: (error: Error | unknown) => {
+      let errorMessage = "An unexpected error occurred while uploading the note";
+      
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: "Error uploading note",
-        description: error.message,
+        description: errorMessage,
         variant: "destructive",
       });
     },

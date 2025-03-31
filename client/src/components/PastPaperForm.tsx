@@ -50,18 +50,32 @@ export default function PastPaperForm({ unitCode, isOpen, onClose }: PastPaperFo
         formData.append("file", file);
       }
 
-      const response = await fetch(`/api/units/${unitCode}/pastpapers`, {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      });
+      // Set a longer timeout for large file uploads
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 120000); // 2 minutes timeout
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(errorText || "Failed to upload past paper");
+      try {
+        const response = await fetch(`/api/units/${unitCode}/pastpapers`, {
+          method: "POST",
+          body: formData,
+          credentials: "include",
+          signal: controller.signal
+        });
+
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(errorText || "Failed to upload past paper");
+        }
+
+        return response.json();
+      } catch (error: unknown) {
+        if (error instanceof Error && error.name === 'AbortError') {
+          throw new Error("Upload timed out. Please try with a smaller file or check your connection.");
+        }
+        throw error;
       }
-
-      return response.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`/api/units/${unitCode}/pastpapers`] });
@@ -74,10 +88,16 @@ export default function PastPaperForm({ unitCode, isOpen, onClose }: PastPaperFo
         description: "Past paper has been uploaded successfully",
       });
     },
-    onError: (error) => {
+    onError: (error: Error | unknown) => {
+      let errorMessage = "An unexpected error occurred while uploading the past paper";
+      
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: "Error uploading past paper",
-        description: error.message,
+        description: errorMessage,
         variant: "destructive",
       });
     },

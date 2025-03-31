@@ -5,7 +5,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "wouter";
 import UnitTabs from "@/components/unit-tabs";
 import { Unit } from "@shared/schema";
-import { FileText, BookOpen, BarChart2, FunctionSquare, Cloud, Book } from "lucide-react";
+import { FileText, BookOpen, BarChart2, FunctionSquare, Cloud, Book, Menu } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 // Map of unit codes to their icons and colors
 const unitStyles: Record<string, { icon: React.ReactNode, color: string }> = {
@@ -61,6 +62,19 @@ export default function UnitPage() {
 
       {/* Main Content */}
       <main className="flex-1 md:ml-64 min-h-screen">
+        <div className="md:hidden p-4 flex items-center">
+          <Button 
+            variant="ghost" 
+            onClick={toggleMobileMenu} 
+            className="text-gray-700 focus:outline-none p-2 mr-2"
+          >
+            <Menu className="h-6 w-6" />
+          </Button>
+          <div className="flex items-center space-x-2">
+            <span className="text-xl">{unitStyle.icon}</span>
+            <h2 className="text-lg font-semibold">{unit?.name || unitCode}</h2>
+          </div>
+        </div>
         <div className="p-4 md:p-6">
           <div className="mb-6">
             <div className="flex items-center space-x-2">
