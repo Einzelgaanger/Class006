@@ -159,8 +159,12 @@ export function setupAuth(app: Express) {
         return res.status(400).send("Current password is incorrect");
       }
       
+      // Hash the new password
       const hashedPassword = await hashPassword(newPassword);
       const updatedUser = await storage.updateUserPassword(user.id, hashedPassword);
+      
+      // Update the session user data so they can stay logged in
+      req.user.password = hashedPassword;
       
       res.json(updatedUser);
     } catch (err) {

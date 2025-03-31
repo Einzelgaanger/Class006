@@ -72,39 +72,41 @@ export default function UnitTabs({ unitCode }: UnitTabsProps) {
   return (
     <>
       <Tabs defaultValue="notes">
-        <TabsList className="mb-4">
-          <TabsTrigger value="notes" className="flex items-center space-x-2">
-            <FileText className="h-4 w-4" />
-            <span>Notes</span>
-            {unreadNotes > 0 && (
-              <Badge variant="secondary" className="ml-1 bg-blue-500 text-white">
-                {unreadNotes}
-              </Badge>
-            )}
-          </TabsTrigger>
-          <TabsTrigger value="assignments" className="flex items-center space-x-2">
-            <Check className="h-4 w-4" />
-            <span>Assignments</span>
-            {pendingAssignments > 0 && (
-              <Badge variant="secondary" className="ml-1 bg-blue-500 text-white">
-                {pendingAssignments}
-              </Badge>
-            )}
-          </TabsTrigger>
-          <TabsTrigger value="pastpapers" className="flex items-center space-x-2">
-            <FileText className="h-4 w-4" />
-            <span>Past Papers</span>
-            {unreadPastPapers > 0 && (
-              <Badge variant="secondary" className="ml-1 bg-blue-500 text-white">
-                {unreadPastPapers}
-              </Badge>
-            )}
-          </TabsTrigger>
-          <TabsTrigger value="rank" className="flex items-center space-x-2">
-            <BarChart className="h-4 w-4" />
-            <span>Rank</span>
-          </TabsTrigger>
-        </TabsList>
+        <div className="overflow-x-auto pb-2 mb-2">
+          <TabsList className="mb-2 inline-flex min-w-max">
+            <TabsTrigger value="notes" className="flex items-center space-x-2">
+              <FileText className="h-4 w-4" />
+              <span>Notes</span>
+              {unreadNotes > 0 && (
+                <Badge variant="secondary" className="ml-1 bg-blue-500 text-white">
+                  {unreadNotes}
+                </Badge>
+              )}
+            </TabsTrigger>
+            <TabsTrigger value="assignments" className="flex items-center space-x-2">
+              <Check className="h-4 w-4" />
+              <span>Assignments</span>
+              {pendingAssignments > 0 && (
+                <Badge variant="secondary" className="ml-1 bg-blue-500 text-white">
+                  {pendingAssignments}
+                </Badge>
+              )}
+            </TabsTrigger>
+            <TabsTrigger value="pastpapers" className="flex items-center space-x-2">
+              <FileText className="h-4 w-4" />
+              <span>Past Papers</span>
+              {unreadPastPapers > 0 && (
+                <Badge variant="secondary" className="ml-1 bg-blue-500 text-white">
+                  {unreadPastPapers}
+                </Badge>
+              )}
+            </TabsTrigger>
+            <TabsTrigger value="rank" className="flex items-center space-x-2">
+              <BarChart className="h-4 w-4" />
+              <span>Rank</span>
+            </TabsTrigger>
+          </TabsList>
+        </div>
 
         <TabsContent value="notes">
           <div className="mb-6 flex flex-wrap items-center justify-between gap-4">

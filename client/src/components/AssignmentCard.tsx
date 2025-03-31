@@ -141,14 +141,33 @@ export default function AssignmentCard({ assignment, unitCode }: AssignmentCardP
 
   return (
     <>
-      <Card className="hover:shadow-md transition-shadow overflow-hidden">
+      <Card className="hover:shadow-md transition-shadow overflow-hidden relative">
+        {/* Floating action button for mobile - visible only on small screens */}
+        {!assignment.completed && (
+          <Button 
+            size="icon"
+            disabled={markComplete.isPending}
+            onClick={() => markComplete.mutate()}
+            className={`${
+              unitCode.startsWith("MAT") ? "bg-blue-500 hover:bg-blue-600" : 
+              unitCode.startsWith("STA") ? "bg-green-500 hover:bg-green-600" : 
+              unitCode.startsWith("DAT") ? "bg-purple-500 hover:bg-purple-600" : 
+              "bg-amber-500 hover:bg-amber-600"
+            } text-white absolute top-2 right-2 sm:hidden z-10 rounded-full`}
+          >
+            <CheckCircle className="h-4 w-4" />
+          </Button>
+        )}
+        
         <CardContent className="p-4 pt-4">
           <div className="flex items-start justify-between">
-            <div>
+            <div className="pr-8 sm:pr-0">
               <h3 className="font-medium">{assignment.title}</h3>
               <p className="text-sm text-gray-500 mt-1 line-clamp-2">{assignment.description}</p>
             </div>
-            {getStatusBadge()}
+            <div className="hidden sm:block">
+              {getStatusBadge()}
+            </div>
           </div>
           
           <div className="flex items-center mt-4 space-x-4 text-xs text-gray-500">
@@ -164,21 +183,28 @@ export default function AssignmentCard({ assignment, unitCode }: AssignmentCardP
             </div>
           </div>
           
-          {!assignment.completed && !isOverdue && (
-            <div className="mt-3 flex items-center text-xs">
-              <Clock className="mr-1 h-3 w-3 text-amber-500" />
-              <span className="text-amber-500 font-medium">{timeLeft}</span>
+          <div className="flex items-center mt-3">
+            <div className="flex-1">
+              {!assignment.completed && !isOverdue && (
+                <div className="flex items-center text-xs">
+                  <Clock className="mr-1 h-3 w-3 text-amber-500" />
+                  <span className="text-amber-500 font-medium">{timeLeft}</span>
+                </div>
+              )}
+              
+              {assignment.completed && (
+                <div className="flex items-center text-xs">
+                  <CheckCircle className="mr-1 h-3 w-3 text-green-500" />
+                  <span className="text-green-600 font-medium">
+                    Completed {formatDistanceToNow(new Date(assignment.completedAt!), { addSuffix: true })}
+                  </span>
+                </div>
+              )}
             </div>
-          )}
-          
-          {assignment.completed && (
-            <div className="mt-3 flex items-center text-xs">
-              <CheckCircle className="mr-1 h-3 w-3 text-green-500" />
-              <span className="text-green-600 font-medium">
-                Completed {formatDistanceToNow(new Date(assignment.completedAt!), { addSuffix: true })}
-              </span>
+            <div className="sm:hidden">
+              {getStatusBadge()}
             </div>
-          )}
+          </div>
         </CardContent>
         
         <CardFooter className="bg-gray-50 px-4 py-3 flex justify-between items-center border-t border-gray-100">
@@ -222,7 +248,7 @@ export default function AssignmentCard({ assignment, unitCode }: AssignmentCardP
                   unitCode.startsWith("STA") ? "bg-green-500 hover:bg-green-600" : 
                   unitCode.startsWith("DAT") ? "bg-purple-500 hover:bg-purple-600" : 
                   "bg-amber-500 hover:bg-amber-600"
-                } text-white`}
+                } text-white hidden sm:flex`}
               >
                 <CheckCircle className="h-4 w-4 mr-1" />
                 <span>Mark Done</span>
@@ -318,8 +344,9 @@ export default function AssignmentCard({ assignment, unitCode }: AssignmentCardP
                       unitCode.startsWith("DAT") ? "bg-purple-500 hover:bg-purple-600" : 
                       "bg-amber-500 hover:bg-amber-600"
                     } text-white`}
+                    size="lg"
                   >
-                    <CheckCircle className="h-4 w-4 mr-1" />
+                    <CheckCircle className="h-5 w-5 mr-2" />
                     <span>Mark as Completed</span>
                   </Button>
                 )}
