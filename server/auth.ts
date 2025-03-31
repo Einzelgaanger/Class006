@@ -115,7 +115,17 @@ export function setupAuth(app: Express) {
           if (!user || !(await comparePasswords(password, user.password))) {
             return done(null, false);
           } else {
-            return done(null, user);
+            // Format user to match Express.User interface
+            const userSession = {
+              id: user.id,
+              name: user.name,
+              admissionNumber: user.admissionNumber,
+              password: user.password,
+              profileImageUrl: user.profileImageUrl || null,
+              rank: user.rank || null,
+              role: user.role || null
+            };
+            return done(null, userSession);
           }
         } catch (err) {
           return done(err);
@@ -128,7 +138,20 @@ export function setupAuth(app: Express) {
   passport.deserializeUser(async (id: number, done) => {
     try {
       const user = await storage.getUser(id);
-      done(null, user);
+      if (!user) {
+        return done(new Error('User not found'), null);
+      }
+      // Explicitly cast the user to match the expected Express.User type
+      const userSession = {
+        id: user.id,
+        name: user.name,
+        admissionNumber: user.admissionNumber,
+        password: user.password,
+        profileImageUrl: user.profileImageUrl || null,
+        rank: user.rank || null,
+        role: user.role || null
+      };
+      done(null, userSession);
     } catch (err) {
       done(err);
     }
