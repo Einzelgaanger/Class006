@@ -1,0 +1,240 @@
+import type { Express } from "express";
+import { createServer, type Server } from "http";
+import { storage } from "./storage";
+import { setupAuth, fileUpload } from "./auth";
+import { fromZodError } from "zod-validation-error";
+import {
+  insertAssignmentSchema,
+  insertNoteSchema,
+  insertPastPaperSchema
+} from "@shared/schema";
+import fs from "fs";
+import path from "path";
+
+export async function registerRoutes(app: Express): Promise<Server> {
+  // Set up auth routes and middleware
+  setupAuth(app);
+
+  // Create upload directory if it doesn't exist
+  const uploadDir = path.join(process.cwd(), 'uploads');
+  fs.mkdirSync(uploadDir, { recursive: true });
+
+  // Dashboard routes
+  app.get("/api/dashboard/stats", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const stats = await storage.getDashboardStats(req.user.id);
+      res.json(stats);
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
+    }
+  });
+
+  app.get("/api/dashboard/activities", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const activities = await storage.getUserActivities(req.user.id);
+      res.json(activities);
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
+    }
+  });
+
+  app.get("/api/dashboard/deadlines", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const deadlines = await storage.getUpcomingDeadlines(req.user.id);
+      res.json(deadlines);
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
+    }
+  });
+
+  // Unit routes
+  app.get("/api/units", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const units = await storage.getAllUnits(req.user.id);
+      res.json(units);
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
+    }
+  });
+
+  app.get("/api/units/:unitCode", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const unit = await storage.getUnitByCode(req.params.unitCode);
+      if (!unit) {
+        return res.status(404).json({ error: "Unit not found" });
+      }
+      res.json(unit);
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
+    }
+  });
+
+  // Notes routes
+  app.get("/api/units/:unitCode/notes", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const notes = await storage.getNotesByUnit(req.params.unitCode, req.user.id);
+      res.json(notes);
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
+    }
+  });
+
+  app.post("/api/units/:unitCode/notes", fileUpload.single('file'), async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const result = insertNoteSchema.safeParse(req.body);
+      if (!result.success) {
+        return res.status(400).json({ error: fromZodError(result.error).message });
+      }
+
+      const fileUrl = req.file ? `/uploads/files/${req.file.filename}` : null;
+      
+      const note = await storage.createNote({
+        ...req.body,
+        unitCode: req.params.unitCode,
+        fileUrl,
+        userId: req.user.id
+      });
+      
+      res.status(201).json(note);
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
+    }
+  });
+
+  app.post("/api/units/:unitCode/notes/:noteId/view", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const noteId = parseInt(req.params.noteId);
+      await storage.markNoteAsViewed(noteId, req.user.id);
+      res.status(200).json({ success: true });
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
+    }
+  });
+
+  // Assignment routes
+  app.get("/api/units/:unitCode/assignments", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const assignments = await storage.getAssignmentsByUnit(req.params.unitCode, req.user.id);
+      res.json(assignments);
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
+    }
+  });
+
+  app.post("/api/units/:unitCode/assignments", fileUpload.single('file'), async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const result = insertAssignmentSchema.safeParse(req.body);
+      if (!result.success) {
+        return res.status(400).json({ error: fromZodError(result.error).message });
+      }
+
+      const fileUrl = req.file ? `/uploads/files/${req.file.filename}` : null;
+      
+      const assignment = await storage.createAssignment({
+        ...req.body,
+        unitCode: req.params.unitCode,
+        fileUrl,
+        userId: req.user.id
+      });
+      
+      res.status(201).json(assignment);
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
+    }
+  });
+
+  app.post("/api/units/:unitCode/assignments/:assignmentId/complete", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const assignmentId = parseInt(req.params.assignmentId);
+      const result = await storage.completeAssignment(assignmentId, req.user.id);
+      res.status(200).json(result);
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
+    }
+  });
+
+  // Past paper routes
+  app.get("/api/units/:unitCode/pastpapers", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const pastPapers = await storage.getPastPapersByUnit(req.params.unitCode, req.user.id);
+      res.json(pastPapers);
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
+    }
+  });
+
+  app.post("/api/units/:unitCode/pastpapers", fileUpload.single('file'), async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const result = insertPastPaperSchema.safeParse(req.body);
+      if (!result.success) {
+        return res.status(400).json({ error: fromZodError(result.error).message });
+      }
+
+      const fileUrl = req.file ? `/uploads/files/${req.file.filename}` : null;
+      
+      const pastPaper = await storage.createPastPaper({
+        ...req.body,
+        unitCode: req.params.unitCode,
+        fileUrl,
+        userId: req.user.id
+      });
+      
+      res.status(201).json(pastPaper);
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
+    }
+  });
+
+  app.post("/api/units/:unitCode/pastpapers/:paperId/view", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const paperId = parseInt(req.params.paperId);
+      await storage.markPastPaperAsViewed(paperId, req.user.id);
+      res.status(200).json({ success: true });
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
+    }
+  });
+
+  // Rankings routes
+  app.get("/api/units/:unitCode/rankings", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const rankings = await storage.getUnitRankings(req.params.unitCode);
+      res.json(rankings);
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
+    }
+  });
+
+  const httpServer = createServer(app);
+  return httpServer;
+}
