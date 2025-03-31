@@ -98,7 +98,7 @@ const Sidebar = ({ isMobileMenuOpen, toggleMobileMenu }: SidebarProps) => {
                     {unit.unitCode.startsWith("HED") && <Book className="mr-3 h-5 w-5 text-amber-500" />}
                     <span>{unit.unitCode}: {unit.name}</span>
                   </div>
-                  {unit.notificationCount > 0 && (
+                  {unit.notificationCount !== undefined && unit.notificationCount > 0 && (
                     <span className={`${
                       unit.unitCode.startsWith("MAT") ? "bg-blue-500" :
                       unit.unitCode.startsWith("STA") ? "bg-green-500" :

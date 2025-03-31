@@ -126,6 +126,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: (err as Error).message });
     }
   });
+  
+  app.delete("/api/units/:unitCode/notes/:noteId", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const noteId = parseInt(req.params.noteId);
+      const note = await storage.deleteNote(noteId, req.user.id);
+      if (!note) {
+        return res.status(404).json({ error: "Note not found or you don't have permission to delete it" });
+      }
+      res.status(200).json({ success: true });
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
+    }
+  });
 
   // Assignment routes
   app.get("/api/units/:unitCode/assignments", async (req, res) => {
@@ -143,7 +158,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
     if (!req.isAuthenticated()) return res.sendStatus(401);
     
     try {
-      const result = insertAssignmentSchema.safeParse(req.body);
+      // Convert the deadline string to a Date object for validation
+      let deadlineDate: Date | null = null;
+      try {
+        if (req.body.deadline) {
+          deadlineDate = new Date(req.body.deadline);
+          
+          // Check if deadline is at least 10 hours from now
+          const now = new Date();
+          const minDeadline = new Date(now.getTime() + 10 * 60 * 60 * 1000); // 10 hours from now
+          
+          if (deadlineDate < minDeadline) {
+            return res.status(400).json({ 
+              error: "Deadline must be at least 10 hours in the future" 
+            });
+          }
+        }
+      } catch (error) {
+        return res.status(400).json({ 
+          error: "Invalid date format for deadline" 
+        });
+      }
+
+      const result = insertAssignmentSchema.safeParse({
+        ...req.body,
+        deadline: deadlineDate
+      });
+      
       if (!result.success) {
         return res.status(400).json({ error: fromZodError(result.error).message });
       }
@@ -151,7 +192,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const fileUrl = req.file ? `/uploads/files/${req.file.filename}` : null;
       
       const assignment = await storage.createAssignment({
-        ...req.body,
+        ...result.data,
         unitCode: req.params.unitCode,
         fileUrl,
         userId: req.user.id
@@ -170,6 +211,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const assignmentId = parseInt(req.params.assignmentId);
       const result = await storage.completeAssignment(assignmentId, req.user.id);
       res.status(200).json(result);
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
+    }
+  });
+  
+  app.delete("/api/units/:unitCode/assignments/:assignmentId", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const assignmentId = parseInt(req.params.assignmentId);
+      const assignment = await storage.deleteAssignment(assignmentId, req.user.id);
+      if (!assignment) {
+        return res.status(404).json({ error: "Assignment not found or you don't have permission to delete it" });
+      }
+      res.status(200).json({ success: true });
     } catch (err) {
       res.status(500).json({ error: (err as Error).message });
     }
@@ -217,6 +273,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const paperId = parseInt(req.params.paperId);
       await storage.markPastPaperAsViewed(paperId, req.user.id);
+      res.status(200).json({ success: true });
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
+    }
+  });
+  
+  app.delete("/api/units/:unitCode/pastpapers/:paperId", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const paperId = parseInt(req.params.paperId);
+      const paper = await storage.deletePastPaper(paperId, req.user.id);
+      if (!paper) {
+        return res.status(404).json({ error: "Past paper not found or you don't have permission to delete it" });
+      }
       res.status(200).json({ success: true });
     } catch (err) {
       res.status(500).json({ error: (err as Error).message });

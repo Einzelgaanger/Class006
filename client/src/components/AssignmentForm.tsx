@@ -32,10 +32,11 @@ const formSchema = z.object({
     .refine(val => {
       const now = new Date();
       const selectedDate = new Date(val);
-      // Allow dates within 5 minutes in the past (to account for form filling time)
-      now.setMinutes(now.getMinutes() - 5);
-      return selectedDate > now;
-    }, "Deadline must be in the future"),
+      
+      // Deadline must be at least 10 hours in the future
+      const minDeadline = new Date(now.getTime() + 10 * 60 * 60 * 1000);
+      return selectedDate >= minDeadline;
+    }, "Deadline must be at least 10 hours in the future"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -179,7 +180,7 @@ export default function AssignmentForm({ unitCode, isOpen, onClose }: Assignment
                     />
                   </FormControl>
                   <FormDescription>
-                    Select a deadline that is in the future.
+                    Deadline must be at least 10 hours in the future.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

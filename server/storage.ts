@@ -50,16 +50,19 @@ export interface IStorage {
   // Notes methods
   getNotesByUnit(unitCode: string, userId: number): Promise<any[]>;
   createNote(data: InsertNote & { userId: number }): Promise<any>;
+  deleteNote(noteId: number, userId: number): Promise<any | null>;
   markNoteAsViewed(noteId: number, userId: number): Promise<void>;
   
   // Assignment methods
   getAssignmentsByUnit(unitCode: string, userId: number): Promise<any[]>;
   createAssignment(data: InsertAssignment & { userId: number }): Promise<any>;
+  deleteAssignment(assignmentId: number, userId: number): Promise<any | null>;
   completeAssignment(assignmentId: number, userId: number): Promise<any>;
   
   // Past papers methods
   getPastPapersByUnit(unitCode: string, userId: number): Promise<any[]>;
   createPastPaper(data: InsertPastPaper & { userId: number }): Promise<any>;
+  deletePastPaper(paperId: number, userId: number): Promise<any | null>;
   markPastPaperAsViewed(paperId: number, userId: number): Promise<void>;
   
   // Ranking methods
@@ -405,6 +408,36 @@ export class DatabaseStorage implements IStorage {
     };
   }
   
+  async deleteNote(noteId: number, userId: number): Promise<any | null> {
+    // First verify that the note exists and belongs to the user
+    const [note] = await db
+      .select()
+      .from(notes)
+      .where(
+        and(
+          eq(notes.id, noteId),
+          eq(notes.userId, userId)
+        )
+      );
+    
+    if (!note) {
+      return null; // Note not found or doesn't belong to the user
+    }
+    
+    // Delete associated views
+    await db
+      .delete(userNoteViews)
+      .where(eq(userNoteViews.noteId, noteId));
+    
+    // Delete the note
+    const [deletedNote] = await db
+      .delete(notes)
+      .where(eq(notes.id, noteId))
+      .returning();
+    
+    return deletedNote;
+  }
+  
   async markNoteAsViewed(noteId: number, userId: number): Promise<void> {
     // Check if already viewed
     const [existingView] = await db
@@ -481,6 +514,36 @@ export class DatabaseStorage implements IStorage {
       uploadedBy: uploader.name,
       completed: false
     };
+  }
+  
+  async deleteAssignment(assignmentId: number, userId: number): Promise<any | null> {
+    // First verify that the assignment exists and belongs to the user
+    const [assignment] = await db
+      .select()
+      .from(assignments)
+      .where(
+        and(
+          eq(assignments.id, assignmentId),
+          eq(assignments.userId, userId)
+        )
+      );
+    
+    if (!assignment) {
+      return null; // Assignment not found or doesn't belong to the user
+    }
+    
+    // Delete associated completions
+    await db
+      .delete(completedAssignments)
+      .where(eq(completedAssignments.assignmentId, assignmentId));
+    
+    // Delete the assignment
+    const [deletedAssignment] = await db
+      .delete(assignments)
+      .where(eq(assignments.id, assignmentId))
+      .returning();
+    
+    return deletedAssignment;
   }
   
   async completeAssignment(assignmentId: number, userId: number): Promise<any> {
@@ -590,6 +653,36 @@ export class DatabaseStorage implements IStorage {
     };
   }
   
+  async deletePastPaper(paperId: number, userId: number): Promise<any | null> {
+    // First verify that the paper exists and belongs to the user
+    const [paper] = await db
+      .select()
+      .from(pastPapers)
+      .where(
+        and(
+          eq(pastPapers.id, paperId),
+          eq(pastPapers.userId, userId)
+        )
+      );
+    
+    if (!paper) {
+      return null; // Paper not found or doesn't belong to the user
+    }
+    
+    // Delete associated views
+    await db
+      .delete(userPaperViews)
+      .where(eq(userPaperViews.paperId, paperId));
+    
+    // Delete the paper
+    const [deletedPaper] = await db
+      .delete(pastPapers)
+      .where(eq(pastPapers.id, paperId))
+      .returning();
+    
+    return deletedPaper;
+  }
+
   async markPastPaperAsViewed(paperId: number, userId: number): Promise<void> {
     // Check if already viewed
     const [existingView] = await db

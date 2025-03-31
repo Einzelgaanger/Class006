@@ -114,6 +114,8 @@ export const insertNoteSchema = createInsertSchema(notes).pick({
   title: true,
   description: true,
   unitCode: true,
+}).extend({
+  fileUrl: z.string().nullable().optional(),
 });
 
 export const insertAssignmentSchema = createInsertSchema(assignments).pick({
@@ -121,6 +123,8 @@ export const insertAssignmentSchema = createInsertSchema(assignments).pick({
   description: true,
   deadline: true,
   unitCode: true,
+}).extend({
+  fileUrl: z.string().nullable().optional(),
 });
 
 export const insertPastPaperSchema = createInsertSchema(pastPapers).pick({
@@ -128,6 +132,8 @@ export const insertPastPaperSchema = createInsertSchema(pastPapers).pick({
   description: true,
   year: true,
   unitCode: true,
+}).extend({
+  fileUrl: z.string().nullable().optional(),
 });
 
 export const insertCompletedAssignmentSchema = createInsertSchema(completedAssignments).pick({

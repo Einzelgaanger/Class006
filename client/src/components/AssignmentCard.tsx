@@ -3,12 +3,13 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useMutation } from "@tanstack/react-query";
-import { queryClient } from "@/lib/queryClient";
+import { queryClient, apiRequest } from "@/lib/queryClient";
 import { formatDistanceToNow, isPast, formatDistance } from "date-fns";
 import { Assignment } from "@shared/schema";
-import { Clock, Calendar, User, Download, CheckCircle } from "lucide-react";
+import { Clock, Calendar, User, Download, CheckCircle, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { useAuth } from "@/hooks/use-auth";
 
 type AssignmentCardProps = {
   assignment: Assignment;
@@ -18,7 +19,9 @@ type AssignmentCardProps = {
 export default function AssignmentCard({ assignment, unitCode }: AssignmentCardProps) {
   const [timeLeft, setTimeLeft] = useState("");
   const [showDetails, setShowDetails] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const { toast } = useToast();
+  const { user } = useAuth();
 
   // Format deadline
   const deadlineDate = new Date(assignment.deadline);
@@ -84,6 +87,30 @@ export default function AssignmentCard({ assignment, unitCode }: AssignmentCardP
       });
     },
   });
+  
+  // Delete assignment mutation
+  const deleteAssignment = useMutation({
+    mutationFn: async () => {
+      return await apiRequest("DELETE", `/api/units/${unitCode}/assignments/${assignment.id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [`/api/units/${unitCode}/assignments`] });
+      queryClient.invalidateQueries({ queryKey: ["/api/dashboard/deadlines"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/units"] });
+      setShowDeleteDialog(false);
+      toast({
+        title: "Success",
+        description: "Assignment deleted successfully",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
 
   // Handle download
   const handleDownload = () => {
@@ -108,6 +135,9 @@ export default function AssignmentCard({ assignment, unitCode }: AssignmentCardP
       return <Badge className="bg-yellow-100 text-yellow-800">Pending</Badge>;
     }
   };
+
+  // Check if the current user is the creator of the assignment
+  const isCreator = user?.name === assignment.uploadedBy;
 
   return (
     <>
@@ -152,9 +182,23 @@ export default function AssignmentCard({ assignment, unitCode }: AssignmentCardP
         </CardContent>
         
         <CardFooter className="bg-gray-50 px-4 py-3 flex justify-between items-center border-t border-gray-100">
-          <Button variant="ghost" size="sm" onClick={() => setShowDetails(true)}>
-            View Details
-          </Button>
+          <div className="flex space-x-2">
+            <Button variant="ghost" size="sm" onClick={() => setShowDetails(true)}>
+              View Details
+            </Button>
+            
+            {isCreator && (
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                onClick={() => setShowDeleteDialog(true)}
+              >
+                <Trash2 className="h-4 w-4 mr-1" />
+                <span>Delete</span>
+              </Button>
+            )}
+          </div>
           
           <div className="flex space-x-2">
             {assignment.fileUrl && (
@@ -235,37 +279,87 @@ export default function AssignmentCard({ assignment, unitCode }: AssignmentCardP
               )}
             </div>
             
-            <div className="flex justify-end space-x-2 pt-4">
-              {assignment.fileUrl && (
+            <div className="flex justify-between pt-4">
+              {isCreator && (
                 <Button 
-                  variant="outline" 
-                  onClick={handleDownload}
+                  variant="outline"
+                  className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
+                  onClick={() => {
+                    setShowDetails(false);
+                    setShowDeleteDialog(true);
+                  }}
                 >
-                  <Download className="h-4 w-4 mr-1" />
-                  <span>Download File</span>
+                  <Trash2 className="h-4 w-4 mr-1" />
+                  <span>Delete Assignment</span>
                 </Button>
               )}
               
-              {!assignment.completed && (
-                <Button 
-                  disabled={markComplete.isPending}
-                  onClick={() => {
-                    markComplete.mutate();
-                    setShowDetails(false);
-                  }}
-                  className={`${
-                    unitCode.startsWith("MAT") ? "bg-blue-500 hover:bg-blue-600" : 
-                    unitCode.startsWith("STA") ? "bg-green-500 hover:bg-green-600" : 
-                    unitCode.startsWith("DAT") ? "bg-purple-500 hover:bg-purple-600" : 
-                    "bg-amber-500 hover:bg-amber-600"
-                  } text-white`}
-                >
-                  <CheckCircle className="h-4 w-4 mr-1" />
-                  <span>Mark as Completed</span>
-                </Button>
-              )}
+              <div className="flex space-x-2 ml-auto">
+                {assignment.fileUrl && (
+                  <Button 
+                    variant="outline" 
+                    onClick={handleDownload}
+                  >
+                    <Download className="h-4 w-4 mr-1" />
+                    <span>Download File</span>
+                  </Button>
+                )}
+                
+                {!assignment.completed && (
+                  <Button 
+                    disabled={markComplete.isPending}
+                    onClick={() => {
+                      markComplete.mutate();
+                      setShowDetails(false);
+                    }}
+                    className={`${
+                      unitCode.startsWith("MAT") ? "bg-blue-500 hover:bg-blue-600" : 
+                      unitCode.startsWith("STA") ? "bg-green-500 hover:bg-green-600" : 
+                      unitCode.startsWith("DAT") ? "bg-purple-500 hover:bg-purple-600" : 
+                      "bg-amber-500 hover:bg-amber-600"
+                    } text-white`}
+                  >
+                    <CheckCircle className="h-4 w-4 mr-1" />
+                    <span>Mark as Completed</span>
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
+        </DialogContent>
+      </Dialog>
+      
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Delete Assignment</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete this assignment? This action cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="mt-4">
+            <h3 className="font-medium">{assignment.title}</h3>
+            <p className="text-sm text-muted-foreground mt-1">{assignment.description}</p>
+          </div>
+          
+          <DialogFooter className="flex space-x-2 pt-4">
+            <Button 
+              variant="outline" 
+              onClick={() => setShowDeleteDialog(false)}
+            >
+              Cancel
+            </Button>
+            <Button 
+              variant="destructive"
+              disabled={deleteAssignment.isPending}
+              onClick={() => deleteAssignment.mutate()}
+            >
+              <Trash2 className="h-4 w-4 mr-2" />
+              Delete
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </>
