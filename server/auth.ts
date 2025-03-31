@@ -134,13 +134,20 @@ export function setupAuth(app: Express) {
     )
   );
 
-  passport.serializeUser((user, done) => done(null, user.id));
+  passport.serializeUser((user, done) => {
+    done(null, user.id);
+  });
+  
   passport.deserializeUser(async (id: number, done) => {
     try {
+      console.log(`Deserializing user with id: ${id}`);
       const user = await storage.getUser(id);
+      
       if (!user) {
-        return done(new Error('User not found'), null);
+        console.error(`User with id ${id} not found in database`);
+        return done(null, false); // Using false instead of an error to prevent repeated errors
       }
+      
       // Explicitly cast the user to match the expected Express.User type
       const userSession = {
         id: user.id,
@@ -151,9 +158,12 @@ export function setupAuth(app: Express) {
         rank: user.rank || null,
         role: user.role || null
       };
+      
+      console.log(`Successfully deserialized user: ${user.name}`);
       done(null, userSession);
     } catch (err) {
-      done(err);
+      console.error('Error deserializing user:', err);
+      done(null, false); // Using false instead of passing the error
     }
   });
 
