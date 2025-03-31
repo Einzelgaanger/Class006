@@ -1,0 +1,54 @@
+  at afterConnectMultiple (node:net:1693:7)
+6:15:15 PM [express] POST /api/login 500 in 5ms :: {"message":"Internal Server Error"}
+    at internalConnectMultiple (node:net:1128:18)
+AggregateError [ECONNREFUSED]: 
+    at afterConnectMultiple (node:net:1693:7)
+    at internalConnectMultiple (node:net:1128:18)
+AggregateError [ECONNREFUSED]: 
+6:15:06 PM [express] POST /api/login 500 in 6ms :: {"message":"Internal Server Error"}
+    at afterConnectMultiple (node:net:1693:7)
+    at internalConnectMultiple (node:net:1128:18)
+AggregateError [ECONNREFUSED]: 
+6:14:56 PM [express] POST /api/login 500 in 61ms :: {"message":"Internal Server Error"}
+6:14:36 PM [express] GET /api/user 401 in 2ms
+==> Your service is live 🎉
+6:13:29 PM [express] serving on port 5000
+> NODE_ENV=production node dist/index.js
+> rest-express@1.0.0 start
+==> Running 'npm run start'
+==> Deploying...
+==> Build successful 🎉
+==> Uploaded in 7.6s. Compression took 2.9s
+==> Uploading build...
+⚡ Done in 6ms
+  dist/index.js  42.5kb
+✓ built in 3.55s
+../dist/public/assets/index-C1yyk3Ob.js   435.18 kB │ gzip: 129.19 kB
+../dist/public/assets/index-W62OFf9Q.css   65.33 kB │ gzip:  11.36 kB
+../dist/public/index.html                   2.21 kB │ gzip:   0.86 kB
+computing gzip size...
+rendering chunks...
+✓ 2032 modules transformed.
+transforming...
+vite v5.4.14 building for production...
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+> rest-express@1.0.0 build
+Run `npm audit` for details.
+  npm audit fix --force
+To address all issues (including breaking changes), run:
+  npm audit fix
+To address issues that do not require attention, run:
+8 moderate severity vulnerabilities
+  run `npm fund` for details
+63 packages are looking for funding
+added 19 packages, removed 101 packages, changed 5 packages, and audited 496 packages in 4s
+==> Running build command 'npm install; npm run build'...
+==> Docs on specifying a bun version: https://render.com/docs/bun-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Node.js version 22.12.0 (default)
+==> Transferred 244MB in 8s. Extraction took 5s.
+==> Downloading cache...
+==> Checking out commit c1038a1b3ca4b6ce172bb8907f7d6dc34f34b3f5 in branch main
+==> Cloning from https://github.com/Einzelgaanger/SDS-Y2-S1-GB
+==> It looks like we don't have access to your repo, but we'll try to clone it anyway.

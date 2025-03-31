@@ -89,7 +89,18 @@ export class DatabaseStorage implements IStorage {
   }
   
   private async initializeStorage() {
-    // This method would be used to initialize any required directories or initial data
+    // Make sure uploads directory exists
+    const fs = await import('fs');
+    const path = await import('path');
+    
+    const uploadDir = path.join(process.cwd(), 'uploads');
+    fs.mkdirSync(uploadDir, { recursive: true });
+    
+    const filesDir = path.join(uploadDir, 'files');
+    fs.mkdirSync(filesDir, { recursive: true });
+    
+    const profilesDir = path.join(uploadDir, 'profiles');
+    fs.mkdirSync(profilesDir, { recursive: true });
   }
   
   // User methods
