@@ -63,10 +63,6 @@ export const completedAssignments = pgTable("completed_assignments", {
   assignmentId: integer("assignment_id").notNull().references(() => assignments.id),
   userId: integer("user_id").notNull().references(() => users.id),
   completedAt: timestamp("completed_at").defaultNow().notNull(),
-}, (table) => {
-  return {
-    assignmentUserUnique: unique().on(table.assignmentId, table.userId),
-  };
 });
 
 // User Note Views Table
@@ -75,31 +71,51 @@ export const userNoteViews = pgTable("user_note_views", {
   noteId: integer("note_id").notNull().references(() => notes.id),
   userId: integer("user_id").notNull().references(() => users.id),
   viewedAt: timestamp("viewed_at").defaultNow().notNull(),
-}, (table) => {
-  return {
-    noteUserUnique: unique().on(table.noteId, table.userId),
-  };
-});
+}, (table) => ({
+  uniqueView: uniqueIndex("unique_note_view").on(table.noteId, table.userId),
+}));
 
-// User Past Paper Views Table
+// User Paper Views Table
 export const userPaperViews = pgTable("user_paper_views", {
   id: serial("id").primaryKey(),
   paperId: integer("paper_id").notNull().references(() => pastPapers.id),
   userId: integer("user_id").notNull().references(() => users.id),
   viewedAt: timestamp("viewed_at").defaultNow().notNull(),
-}, (table) => {
-  return {
-    paperUserUnique: unique().on(table.paperId, table.userId),
-  };
-});
+}, (table) => ({
+  uniqueView: uniqueIndex("unique_paper_view").on(table.paperId, table.userId),
+}));
+
+// Types
+export type User = typeof users.$inferSelect;
+export type Unit = typeof units.$inferSelect;
+export type Note = typeof notes.$inferSelect;
+export type Assignment = typeof assignments.$inferSelect;
+export type PastPaper = typeof pastPapers.$inferSelect;
+export type CompletedAssignment = typeof completedAssignments.$inferSelect;
+export type UserNoteView = typeof userNoteViews.$inferSelect;
+export type UserPaperView = typeof userPaperViews.$inferSelect;
+
+// Insert Types
+export type InsertUser = typeof users.$inferInsert;
+export type InsertUnit = typeof units.$inferInsert;
+export type InsertNote = typeof notes.$inferInsert;
+export type InsertAssignment = typeof assignments.$inferInsert;
+export type InsertPastPaper = typeof pastPapers.$inferInsert;
+export type InsertCompletedAssignment = typeof completedAssignments.$inferInsert;
+export type InsertUserNoteView = typeof userNoteViews.$inferInsert;
+export type InsertUserPaperView = typeof userPaperViews.$inferInsert;
 
 // Zod Schemas
-export const insertUserSchema = createInsertSchema(users).pick({
-  name: true,
-  admissionNumber: true,
-  password: true,
-});
+export const insertUserSchema = createInsertSchema(users);
+export const insertUnitSchema = createInsertSchema(units);
+export const insertNoteSchema = createInsertSchema(notes);
+export const insertAssignmentSchema = createInsertSchema(assignments);
+export const insertPastPaperSchema = createInsertSchema(pastPapers);
+export const insertCompletedAssignmentSchema = createInsertSchema(completedAssignments);
+export const insertUserNoteViewSchema = createInsertSchema(userNoteViews);
+export const insertUserPaperViewSchema = createInsertSchema(userPaperViews);
 
+// Zod Schemas
 export const loginSchema = z.object({
   name: z.string().min(1, "Name is required"),
   admissionNumber: z.string().min(1, "Admission number is required"),
@@ -149,12 +165,9 @@ export const insertCompletedAssignmentSchema = createInsertSchema(completedAssig
 });
 
 // Types
-export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type LoginData = z.infer<typeof loginSchema>;
 export type PasswordUpdateData = z.infer<typeof passwordUpdateSchema>;
-
-export type Unit = typeof units.$inferSelect;
 
 export type Note = typeof notes.$inferSelect & {
   uploadedBy: string;
