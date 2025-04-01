@@ -107,26 +107,6 @@ export type CompletedAssignment = typeof completedAssignments.$inferSelect;
 export type UserNoteView = typeof userNoteViews.$inferSelect;
 export type UserPaperView = typeof userPaperViews.$inferSelect;
 
-// Insert Types
-export type InsertUser = typeof users.$inferInsert;
-export type InsertUnit = typeof units.$inferInsert;
-export type InsertNote = typeof notes.$inferInsert;
-export type InsertAssignment = typeof assignments.$inferInsert;
-export type InsertPastPaper = typeof pastPapers.$inferInsert;
-export type InsertCompletedAssignment = typeof completedAssignments.$inferInsert;
-export type InsertUserNoteView = typeof userNoteViews.$inferInsert;
-export type InsertUserPaperView = typeof userPaperViews.$inferInsert;
-
-// Zod Schemas
-export const insertUserSchema = createInsertSchema(users);
-export const insertUnitSchema = createInsertSchema(units);
-export const insertNoteSchema = createInsertSchema(notes);
-export const insertAssignmentSchema = createInsertSchema(assignments);
-export const insertPastPaperSchema = createInsertSchema(pastPapers);
-export const insertCompletedAssignmentSchema = createInsertSchema(completedAssignments);
-export const insertUserNoteViewSchema = createInsertSchema(userNoteViews);
-export const insertUserPaperViewSchema = createInsertSchema(userPaperViews);
-
 // Zod Schemas
 export const loginSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -145,6 +125,9 @@ export const forgotPasswordSchema = z.object({
   secretKey: z.string().min(1, "Secret key is required"),
 });
 
+// Insert Schemas
+export const insertUserSchema = createInsertSchema(users);
+export const insertUnitSchema = createInsertSchema(units);
 export const insertNoteSchema = createInsertSchema(notes).pick({
   title: true,
   description: true,
@@ -152,7 +135,6 @@ export const insertNoteSchema = createInsertSchema(notes).pick({
 }).extend({
   fileUrl: z.string().nullable().optional(),
 });
-
 export const insertAssignmentSchema = createInsertSchema(assignments).pick({
   title: true,
   description: true,
@@ -161,7 +143,6 @@ export const insertAssignmentSchema = createInsertSchema(assignments).pick({
 }).extend({
   fileUrl: z.string().nullable().optional(),
 });
-
 export const insertPastPaperSchema = createInsertSchema(pastPapers).pick({
   title: true,
   description: true,
@@ -170,11 +151,12 @@ export const insertPastPaperSchema = createInsertSchema(pastPapers).pick({
 }).extend({
   fileUrl: z.string().nullable().optional(),
 });
-
 export const insertCompletedAssignmentSchema = createInsertSchema(completedAssignments).pick({
   assignmentId: true,
   userId: true,
 });
+export const insertUserNoteViewSchema = createInsertSchema(userNoteViews);
+export const insertUserPaperViewSchema = createInsertSchema(userPaperViews);
 
 // Types
 export type InsertUser = z.infer<typeof insertUserSchema>;
