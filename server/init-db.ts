@@ -13,6 +13,8 @@ import {
   userPaperViews
 } from "../shared/schema";
 import { log } from "./vite";
+import fs from 'fs';
+import path from 'path';
 
 const scryptAsync = promisify(scrypt);
 
@@ -20,6 +22,24 @@ async function hashPassword(password: string) {
   const salt = randomBytes(16).toString("hex");
   const buf = (await scryptAsync(password, salt, 64)) as Buffer;
   return `${buf.toString("hex")}.${salt}`;
+}
+
+async function runMigrations(client: postgres.Sql) {
+  const migrationsDir = path.join(process.cwd(), 'migrations');
+  const files = fs.readdirSync(migrationsDir).filter(f => f.endsWith('.sql')).sort();
+
+  for (const file of files) {
+    const filePath = path.join(migrationsDir, file);
+    const sql = fs.readFileSync(filePath, 'utf8');
+    
+    try {
+      await client.unsafe(sql);
+      log(`Applied migration: ${file}`, "db-init");
+    } catch (error) {
+      log(`Error applying migration ${file}: ${(error as Error).message}`, "db-init");
+      throw error;
+    }
+  }
 }
 
 export async function initializeDatabase() {
@@ -31,129 +51,13 @@ export async function initializeDatabase() {
   const db = drizzle(client, {});
   
   try {
-    // Check if the users table exists
-    try {
-      await db.select().from(users).limit(1);
-      log("Database tables already exist", "db-init");
-    } catch (error) {
-      // If we get an error, the tables don't exist yet
-      log("Creating database tables...", "db-init");
-      
-      // Create tables one by one
-      const createTable = async (tableName: string, query: string) => {
-        try {
-          await client.unsafe(query);
-          log(`Created table: ${tableName}`, "db-init");
-        } catch (err) {
-          log(`Error creating table ${tableName}: ${(err as Error).message}`, "db-init");
-        }
-      };
-      
-      // Create users table
-      await createTable("users", `
-        CREATE TABLE IF NOT EXISTS users (
-          id SERIAL PRIMARY KEY,
-          name TEXT NOT NULL,
-          admission_number TEXT NOT NULL UNIQUE,
-          password TEXT NOT NULL,
-          profile_image_url TEXT,
-          rank INTEGER,
-          role TEXT DEFAULT 'student'
-        )
-      `);
-      
-      // Create units table
-      await createTable("units", `
-        CREATE TABLE IF NOT EXISTS units (
-          id SERIAL PRIMARY KEY,
-          unit_code TEXT NOT NULL UNIQUE,
-          name TEXT NOT NULL,
-          description TEXT,
-          category TEXT
-        )
-      `);
-      
-      // Create notes table
-      await createTable("notes", `
-        CREATE TABLE IF NOT EXISTS notes (
-          id SERIAL PRIMARY KEY,
-          title TEXT NOT NULL,
-          description TEXT NOT NULL,
-          file_url TEXT,
-          unit_code TEXT NOT NULL,
-          user_id INTEGER NOT NULL REFERENCES users(id),
-          created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
-        )
-      `);
-      
-      // Create assignments table
-      await createTable("assignments", `
-        CREATE TABLE IF NOT EXISTS assignments (
-          id SERIAL PRIMARY KEY,
-          title TEXT NOT NULL,
-          description TEXT NOT NULL,
-          file_url TEXT,
-          unit_code TEXT NOT NULL,
-          user_id INTEGER NOT NULL REFERENCES users(id),
-          deadline TIMESTAMP WITH TIME ZONE,
-          created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
-        )
-      `);
-      
-      // Create past_papers table
-      await createTable("past_papers", `
-        CREATE TABLE IF NOT EXISTS past_papers (
-          id SERIAL PRIMARY KEY,
-          title TEXT NOT NULL,
-          description TEXT NOT NULL,
-          year TEXT NOT NULL,
-          file_url TEXT,
-          unit_code TEXT NOT NULL,
-          user_id INTEGER NOT NULL REFERENCES users(id),
-          created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
-        )
-      `);
-      
-      // Create completed_assignments table
-      await createTable("completed_assignments", `
-        CREATE TABLE IF NOT EXISTS completed_assignments (
-          id SERIAL PRIMARY KEY,
-          assignment_id INTEGER NOT NULL REFERENCES assignments(id),
-          user_id INTEGER NOT NULL REFERENCES users(id),
-          completed_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
-        )
-      `);
-      
-      // Create user_note_views table
-      await createTable("user_note_views", `
-        CREATE TABLE IF NOT EXISTS user_note_views (
-          id SERIAL PRIMARY KEY,
-          note_id INTEGER NOT NULL REFERENCES notes(id),
-          user_id INTEGER NOT NULL REFERENCES users(id),
-          viewed_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-          UNIQUE(note_id, user_id)
-        )
-      `);
-      
-      // Create user_paper_views table
-      await createTable("user_paper_views", `
-        CREATE TABLE IF NOT EXISTS user_paper_views (
-          id SERIAL PRIMARY KEY,
-          paper_id INTEGER NOT NULL REFERENCES past_papers(id),
-          user_id INTEGER NOT NULL REFERENCES users(id),
-          viewed_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-          UNIQUE(paper_id, user_id)
-        )
-      `);
-      
-      // Create session table
-      await createTable("session", `
-        CREATE TABLE IF NOT EXISTS "session" (
-          "sid" varchar NOT NULL PRIMARY KEY,
-          "sess" json NOT NULL,
-          "expire" timestamp(6) NOT NULL
-        )
-      `);
+    // Run migrations
+    await runMigrations(client);
+    
+    // Check if we need to seed any data
+    const [existingUnits] = await db.select().from(units).limit(1);
+    if (!existingUnits) {
+      log("No units found, seeding sample data...", "db-init");
       
       // Add sample units
       await db.insert(units).values([
@@ -220,11 +124,12 @@ export async function initializeDatabase() {
       ]).catch(err => {
         log(`Error adding sample users: ${err.message}`, "db-init");
       });
-      
-      log("Database initialization complete", "db-init");
     }
+    
+    log("Database initialization complete", "db-init");
   } catch (error) {
     log(`Database initialization error: ${(error as Error).message}`, "db-init");
+    throw error;
   } finally {
     // Close the client
     await client.end();
