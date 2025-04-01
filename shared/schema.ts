@@ -88,9 +88,21 @@ export const userPaperViews = pgTable("user_paper_views", {
 // Types
 export type User = typeof users.$inferSelect;
 export type Unit = typeof units.$inferSelect;
-export type Note = typeof notes.$inferSelect;
-export type Assignment = typeof assignments.$inferSelect;
-export type PastPaper = typeof pastPapers.$inferSelect;
+export type Note = typeof notes.$inferSelect & {
+  uploadedBy: string;
+  uploaderImageUrl?: string;
+  viewed: boolean;
+};
+export type Assignment = typeof assignments.$inferSelect & {
+  uploadedBy: string;
+  completed: boolean;
+  completedAt?: Date;
+};
+export type PastPaper = typeof pastPapers.$inferSelect & {
+  uploadedBy: string;
+  uploaderImageUrl?: string;
+  viewed: boolean;
+};
 export type CompletedAssignment = typeof completedAssignments.$inferSelect;
 export type UserNoteView = typeof userNoteViews.$inferSelect;
 export type UserPaperView = typeof userPaperViews.$inferSelect;
@@ -168,28 +180,9 @@ export const insertCompletedAssignmentSchema = createInsertSchema(completedAssig
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type LoginData = z.infer<typeof loginSchema>;
 export type PasswordUpdateData = z.infer<typeof passwordUpdateSchema>;
-
-export type Note = typeof notes.$inferSelect & {
-  uploadedBy: string;
-  uploaderImageUrl?: string;
-  viewed: boolean;
-};
 export type InsertNote = z.infer<typeof insertNoteSchema>;
-
-export type Assignment = typeof assignments.$inferSelect & {
-  uploadedBy: string;
-  completed: boolean;
-  completedAt?: Date;
-};
 export type InsertAssignment = z.infer<typeof insertAssignmentSchema>;
-
-export type PastPaper = typeof pastPapers.$inferSelect & {
-  uploadedBy: string;
-  uploaderImageUrl?: string;
-  viewed: boolean;
-};
 export type InsertPastPaper = z.infer<typeof insertPastPaperSchema>;
-
 export type InsertCompletedAssignment = z.infer<typeof insertCompletedAssignmentSchema>;
 
 export type Activity = {
